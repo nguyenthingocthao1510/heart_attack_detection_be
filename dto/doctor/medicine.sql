@@ -1,0 +1,8 @@
+CREATE TABLE medicine (
+  id INT NOT NULL AUTO_INCREMENT,
+  name VARCHAR(255) NOT NULL,
+  uses VARCHAR(255),
+  description VARCHAR(255),
+  PRIMARY KEY (id)
+) AUTO_INCREMENT = 1;
+

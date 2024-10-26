@@ -1,2 +1,5 @@
 Flask
 PyMySQL
+python-dotenv
+pyjwt
+flask-cors
