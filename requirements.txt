@@ -3,3 +3,4 @@ PyMySQL
 python-dotenv
 pyjwt
 flask-cors
+gunicorn
