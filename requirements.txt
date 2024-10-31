@@ -1,2 +1,5 @@
 Flask
 PyMySQL
+pandas
+numpy
+pickle
