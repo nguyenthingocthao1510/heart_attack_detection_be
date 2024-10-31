@@ -3,3 +3,7 @@ PyMySQL
 pandas
 numpy
 pickle
+python-dotenv
+pyjwt
+flask-cors
+gunicorn

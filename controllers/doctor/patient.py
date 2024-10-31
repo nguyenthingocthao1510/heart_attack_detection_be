@@ -15,7 +15,6 @@ def get_all():
                 })
             return {'data': result}, 200
     except Exception as e:
-            print(f'Error: {str(e)}')
             return (f'Error: {str(e)}')
     finally:
             cur.close()
@@ -37,7 +36,6 @@ def get_by_id(id):
             else:
                 return {'error':'Patient not found'}, 404
         except Exception as e:
-            print(f'Error: {str(e)}')
             return (f'Error: {str(e)}')
         finally:
             cur.close()
@@ -46,17 +44,15 @@ def get_by_id(id):
 def add():
     if request.method == 'POST':
         data = request.get_json()
-        id = data['id']
         name = data['name']
 
         cur = db.cursor()
         try:
-            cur.execute('INSERT INTO patient(id, name) VALUES (%s, %s)', (id, name))
+            cur.execute('INSERT INTO patient(name) VALUES (%s)', (name))
             db.commit()
             return {'data': data}, 200
         except Exception as e:
             db.rollback()
-            print(f'Error: {str(e)}')
             return (f'Error: {str(e)}')
         finally:
             cur.close()
@@ -75,7 +71,6 @@ def update(id):
             if cur.rowcount > 0:  
                 return {'data': data}, 200
             else:
-                print(f'ID: {id} not found.')
                 return ('ID not found', 404) 
         except Exception as e:
             db.rollback()
