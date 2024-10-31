@@ -1,5 +1,7 @@
 Flask
 PyMySQL
+pandas
+numpy
 python-dotenv
 pyjwt
 flask-cors
