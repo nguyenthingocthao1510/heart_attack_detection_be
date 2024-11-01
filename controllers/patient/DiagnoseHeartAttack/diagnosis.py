@@ -1,11 +1,11 @@
-from flask import Flask, request, jsonify
+from flask import request, jsonify
 import pandas as pd
 import numpy as np
 import pickle
 
-with open('svc.pkl', 'rb') as model:
+with open(r'controllers/patient/DiagnoseHeartAttack/svc.pkl', 'rb') as model:
     svc = pickle.load(model)
-with open('scaler.pkl', 'rb') as scaler:
+with open(r'controllers/patient/DiagnoseHeartAttack/scaler.pkl', 'rb') as scaler:
     scaler = pickle.load(scaler)
 
 model_cols = ['age', 'trtbps', 'chol', 'thalachh', 'oldpeak',
@@ -28,7 +28,7 @@ def predict():
     
     df = df.reindex(columns=model_cols, fill_value=0)
 
-    df[['age', 'trtbps', 'chol', 'thalachh', 'oldpeak']] = scaler.transform(df[['age', 'trtbps', 'chol', 'thalachh', 'oldpeak']])
+    df[['age', 'trtbps', 'chol', 'thalachh', 'oldpeak']] = scaler.fit_transform(df[['age', 'trtbps', 'chol', 'thalachh', 'oldpeak']])
 
     prediction = svc.predict(df)
 

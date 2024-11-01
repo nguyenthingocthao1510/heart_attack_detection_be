@@ -2,6 +2,7 @@ Flask
 PyMySQL
 pandas
 numpy
+scikit-learn
 python-dotenv
 pyjwt
 flask-cors
