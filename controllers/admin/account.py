@@ -25,9 +25,14 @@ def login():
     user_token = validate_user(user_username, user_password)
 
     if user_token:
-        return jsonify({'message': 'Login successfully', 'jwt_token': user_token})
+        return jsonify({
+            'message': 'Login successfully',
+            'jwt_token': user_token['jwt_token'],  
+            'roleId': user_token['role_id']        
+        })
     else:
-        Response(status=401)
+        return Response(status=401) 
+
 
 def get_all():
     cur = db.cursor()
@@ -49,12 +54,13 @@ def get_all():
 def get_account_on_role(account_id):
     cur = db.cursor()
     try:
-        cur.execute('SELECT r.name FROM role r JOIN account a ON r.id = a.role_id WHERE a.id = %s', (account_id))
+        cur.execute('SELECT r.name, r.id FROM role r JOIN account a ON r.id = a.role_id WHERE a.id = %s', (account_id))
         account_role = cur.fetchone()
 
         if account_role:
             res = {
                 'name' : account_role[0],
+                'id': account_role[1],
             }
             return {'data': res}, 200
         else:

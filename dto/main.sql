@@ -60,12 +60,18 @@ image VARCHAR(255),
 PRIMARY KEY(id)
 ) AUTO_INCREMENT = 1;
 
-CREATE TABLE module_permission (
-    module_id INT,
-    permission_id INT,
+CREATE TABLE module_role(
+module_id INT,
+role_id INT,
     FOREIGN KEY (module_id) REFERENCES module(id),
-    FOREIGN KEY (permission_id) REFERENCES permission(id)
+    FOREIGN KEY (role_id) REFERENCES role(id)
 );
+
+CREATE TABLE role(
+id INT NOT NULL AUTO_INCREMENT,
+name VARCHAR(255),
+PRIMARY KEY(id)
+) AUTO_INCREMENT = 1;
 
 CREATE TABLE module_role_permission(
 module_id INT,
@@ -75,8 +81,6 @@ permission_id INT,
     FOREIGN KEY (role_id) REFERENCES role(id),
     FOREIGN KEY (permission_id) REFERENCES permission(id)
 );
-
-
 
 -- INSERT VALUES SECTION --
 INSERT INTO `patient` (`id`, `name`) VALUES (6, 'Patient E');
