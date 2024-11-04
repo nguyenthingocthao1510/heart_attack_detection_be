@@ -76,7 +76,26 @@ permission_id INT,
     FOREIGN KEY (permission_id) REFERENCES permission(id)
 );
 
+CREATE TABLE diagnosis (
+    diagnosis_id INT NOT NULL AUTO_INCREMENT,
+    patient_id INT,
+    doctor_id INT,
+    diagnosis_date DATETIME,
+    diagnosis_result INT,
+    trtbps INT,
+    chol INT,
+    thalachh INT,
+    oldpeak DOUBLE(2,2),
+    exng CHAR(3),
+    caa INT,
+    cp VARCHAR(20),
+    fbs INT,
+    restecg INT,
+    slp VARCHAR(20),
+    thall VARCHAR(20),
+    FOREIGN KEY (id) REFERENCES patient(id)
 
+)
 
 -- INSERT VALUES SECTION --
 INSERT INTO `patient` (`id`, `name`) VALUES (6, 'Patient E');

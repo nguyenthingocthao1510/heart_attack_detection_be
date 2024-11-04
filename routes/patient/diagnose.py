@@ -1,5 +1,5 @@
 from flask import Blueprint
-from controllers.patient.DiagnoseHeartAttack.diagnosis import predict
+from controllers.patient.Diagnosis.predict import predict
 
 diagnosis_route = Blueprint('diagnosis', __name__)
 
