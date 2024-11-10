@@ -4,6 +4,8 @@ from flask import Flask
 from routes.admin.account import account_route
 from routes.admin.module import module_route
 from routes.admin.role import role_route
+from routes.admin.permission import permission_route
+
 # from routes.admin.account import account_route
 # from routes.admin.module import module_route
 # from routes.admin.role import role_route
@@ -37,4 +39,5 @@ def create_app():
     threading.Thread(target=generate_heartbeat, daemon=True).start()
     threading.Thread(target=generate_temperature, daemon=True).start()
     app.register_blueprint(dashboard_route, url_prefix= url_prefix)
+    app.register_blueprint(permission_route, url_prefix = url_prefix)
     return app
