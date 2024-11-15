@@ -67,21 +67,29 @@ def generate_jwt_token(content):
     return token
 
 def validate_user(username, password):
-    current_user = db_read('''SELECT * FROM account WHERE username = %s''', (username,))
+    # Lấy thông tin người dùng từ database
+    current_user = db_read('SELECT * FROM account WHERE username = %s', (username,))
 
     if len(current_user) == 1:
-        saved_password_hash = current_user[0][4]  # password_hash is the 5th column
-        saved_password_salt = current_user[0][3]  # password_salt is the 4th column
+        saved_password_hash = current_user[0][4] 
+        saved_password_salt = current_user[0][3]
+        user_role_id = current_user[0][5] 
         password_hash = generate_hash(password, saved_password_salt)
 
         if password_hash == saved_password_hash:
-            user_id = current_user[0][0]  # id is the 1st column
+            user_id = current_user[0][0]
             jwt_token = generate_jwt_token({"id": user_id})
-            return jwt_token
+            
+            # Trả về dictionary chứa jwt_token và role_id
+            return {
+                'jwt_token': jwt_token,
+                'role_id': user_role_id  # Thêm role_id vào dictionary
+            }
         else:
             return False
     else:
         return False
+
 
 
 
