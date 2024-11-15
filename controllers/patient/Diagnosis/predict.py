@@ -1,7 +1,7 @@
+from dbconfig.app import db
 from flask import request, jsonify
 import pandas as pd
 import pickle
-from copy import deepcopy
 from controllers.patient.Diagnosis.preprocess import preprocess
 
 with open(r'controllers/patient/Diagnosis/svc.pkl', 'rb') as model:
@@ -19,13 +19,15 @@ def predict():
     if request.method == 'POST':
         data = request.get_json()
 
-    copy_data = deepcopy(data)
+    saved_data = data
+
+    print(saved_data)
+
+    preprocess(data)
         
     if not data or not all(key in data for key in ['age', 'trtbps', 'chol', 'thalachh', 'oldpeak', 
                                                    'sex', 'exng', 'caa', 'cp', 'fbs', 'restecg', 'slp', 'thall']):
         return jsonify({'error': 'Missing value, please enter again.'}), 400
-
-    preprocess(data)
 
     df = pd.DataFrame([data])
 
@@ -37,5 +39,17 @@ def predict():
 
     prediction = svc.predict(df)
 
+    cur = db.cursor()
+    try:
+        diagnosis_result = prediction
+        cur.execute('INSERT INTO diagnosis VALUES (%s)', (saved_data))
+        db.commit()
+    except Exception as e:
+        db.rollback()
+    finally:
+        cur.close()
+
+    print(saved_data)
+
     return jsonify({'prediction': int(prediction[0]),
-                    'diagnosis': copy_data}), 200
+                    'diagnosis': saved_data}), 200

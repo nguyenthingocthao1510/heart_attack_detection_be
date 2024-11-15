@@ -22,7 +22,7 @@ def preprocess(data):
             data['slp'] = 0
         case 'Upsloping':
             data['slp'] = 1
-        case 'Flat':
+        case 'diagnosis_result':
             data['slp'] = 2
         case 'Downsloping':
             data['slp'] = 3
