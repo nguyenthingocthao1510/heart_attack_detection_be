@@ -13,9 +13,9 @@ class PatientPersonalInformationController:
                 if patient:
                     res = {
                     'patient_id' : patient[0],
-                    'patient_name': patient[1],
-                    'patient_gender': patient[2],
-                    'patient_dob': patient[3],
+                    'name': patient[1],
+                    'gender': patient[2],
+                    'dob': patient[3],
                     }
                     return {'data': res}, 200
                 else:
