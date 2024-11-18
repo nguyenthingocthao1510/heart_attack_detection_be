@@ -2,7 +2,8 @@ from dbconfig.app import db
 from flask import request, jsonify
 import pandas as pd
 import pickle
-from controllers.patient.Diagnosis.preprocess import preprocess
+from copy import deepcopy
+from controllers.patient.diagnosis.preprocess import preprocess
 
 with open(r'controllers/patient/Diagnosis/svc.pkl', 'rb') as model:
     svc = pickle.load(model)
@@ -19,9 +20,7 @@ def predict():
     if request.method == 'POST':
         data = request.get_json()
 
-    saved_data = data
-
-    print(saved_data)
+    saved_data = deepcopy(data)
 
     preprocess(data)
         
@@ -38,18 +37,6 @@ def predict():
     df[['age', 'trtbps', 'chol', 'thalachh', 'oldpeak']] = scaler.fit_transform(df[['age', 'trtbps', 'chol', 'thalachh', 'oldpeak']])
 
     prediction = svc.predict(df)
-
-    cur = db.cursor()
-    try:
-        diagnosis_result = prediction
-        cur.execute('INSERT INTO diagnosis VALUES (%s)', (saved_data))
-        db.commit()
-    except Exception as e:
-        db.rollback()
-    finally:
-        cur.close()
-
-    print(saved_data)
 
     return jsonify({'prediction': int(prediction[0]),
                     'diagnosis': saved_data}), 200
