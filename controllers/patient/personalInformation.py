@@ -1,7 +1,6 @@
 from dbconfig.app import db
-from flask import request
 
-class PatientPersonalInformationController:
+class PersonalInformation:
     @staticmethod
     def get_by_id(patient_id):
         cur = db.cursor()
