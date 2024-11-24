@@ -28,7 +28,8 @@ def login():
         return jsonify({
             'message': 'Login successfully',
             'jwt_token': user_token['jwt_token'],  
-            'roleId': user_token['role_id']        
+            'roleId': user_token['role_id'],
+            'accountId': user_token['id']       
         })
     else:
         return Response(status=401) 
