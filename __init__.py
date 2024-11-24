@@ -20,6 +20,12 @@ from controllers.patient.dashboard import generate_heartbeat, generate_temperatu
 # PATIENT
 from routes.patient.diagnose import diagnosis_route
 from routes.patient.dashboard import dashboard_route
+from routes.category.Medicine.medicine import medicine_route
+
+#CATEGORY
+from routes.category.Prescription.prescription import prescription_route
+from routes.category.Doctor.doctor import doctor_route
+
 from routes.patient.personalInformation import patient_personal_info_route
 def create_app():
     app = Flask(__name__)
@@ -43,4 +49,8 @@ def create_app():
     threading.Thread(target=generate_temperature, daemon=True).start()
     app.register_blueprint(dashboard_route, url_prefix= url_prefix)
     app.register_blueprint(permission_route, url_prefix = url_prefix)
+    app.register_blueprint(prescription_route, url_prefix = url_prefix)
+    app.register_blueprint(medicine_route, url_prefix = url_prefix)
+    app.register_blueprint(doctor_route, url_prefix = url_prefix)
+    
     return app
