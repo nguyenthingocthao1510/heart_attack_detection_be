@@ -7,12 +7,12 @@ class PatientPersonalInformationController:
         if request.method == 'GET':
             cur = db.cursor()
             try:
-                cur.execute('SELECT * FROM patient WHERE patient_id = %s', (id,))
+                cur.execute('SELECT * FROM patient WHERE patient_id = %s', (patient_id,))
                 patient = cur.fetchone()
 
                 if patient:
                     res = {
-                    'patient_id' : patient[0],
+                    'patient_id': patient[0],
                     'name': patient[1],
                     'gender': patient[2],
                     'dob': patient[3],
