@@ -18,7 +18,7 @@ from controllers.patient.dashboard import generate_heartbeat, generate_temperatu
 # from routes.doctor.patient import patient_route
 
 # PATIENT
-from routes.patient.diagnose import diagnosis_route
+from routes.patient.diagnosis import diagnosis_route
 from routes.patient.dashboard import dashboard_route
 from routes.category.Medicine.medicine import medicine_route
 
