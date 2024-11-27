@@ -13,7 +13,7 @@ def register():
 
     try:
         if db_write('''INSERT INTO account(username, password_salt, password_hash, role_id) VALUES (%s,%s,%s,%s)''', (user_username,password_salt, password_hash ,user_role)):
-            return Response(status=201)
+            return Response(status=200)
     except Exception as e:
         print('Error: ', str(e))
         return Response(status=409)
