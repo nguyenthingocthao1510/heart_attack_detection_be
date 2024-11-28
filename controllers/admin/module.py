@@ -67,22 +67,46 @@ def add():
 #UPDATE
 def update(id):
     if request.method == 'PUT':
-      data = request.get_json()
-      name = data['name']
+        data = request.get_json()
+        if not data:
+            return {'error': 'No JSON payload received'}, 400
 
-      cur = db.cursor()
+        update_fields = []
+        update_values = []
 
-      try:
-            cur.execute('UPDATE module SET name = %s WHERE id = %s', (name,id))
+        if 'name' in data:
+            update_fields.append("name = %s")
+            update_values.append(data['name'])
+
+        if 'route' in data:
+            update_fields.append("route = %s")
+            update_values.append(data['route'])
+
+        if 'image' in data:
+            update_fields.append("image = %s")
+            update_values.append(data['image'])
+
+        if not update_fields:
+            return {'error': 'No fields provided to update'}, 400
+
+        update_values.append(id)
+
+        update_query = f"UPDATE module SET {', '.join(update_fields)} WHERE id = %s"
+
+        cur = db.cursor()
+
+        try:
+            cur.execute(update_query, tuple(update_values))
             if cur.rowcount > 0:
-                  return {'data': data}, 200
+                return {'message': 'Module updated successfully'}, 200
             else:
-                return ('ID not found', 404) 
-      except Exception as e:
+                return {'error': 'ID not found'}, 404
+        except Exception as e:
             db.rollback()
-            return (f'Error: {str(e)}', 500) 
-      finally:  
+            return {'error': f'Error: {str(e)}'}, 500
+        finally:
             cur.close()
+
 
 #DELETE
 def delete(id):
