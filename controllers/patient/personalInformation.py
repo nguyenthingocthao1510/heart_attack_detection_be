@@ -2,17 +2,18 @@ from dbconfig.app import db
 
 class PersonalInformation:
     @staticmethod
-    def get_by_id(patient_id):
+    def get_by_id(account_id):
         cur = db.cursor()
         try:
-            cur.execute('SELECT * FROM patient WHERE id = %s', (patient_id,))
+            cur.execute('SELECT * FROM patient WHERE account_id = %s', (account_id,))
             patient = cur.fetchone()
             if patient:
                 res = {
-                    'patient_id': patient[0],
+                    'id': patient[0],
                     'name': patient[1],
-                    'gender': patient[2],
-                    'dob': patient[3],
+                    'account_id': patient[2],
+                    'gender': patient[3],
+                    'dob': patient[4],
                 }
                 return {'data': res}, 200
             else:
