@@ -26,7 +26,7 @@ from routes.category.Medicine.medicine import medicine_route
 from routes.category.Prescription.prescription import prescription_route
 from routes.category.Doctor.doctor import doctor_route
 
-from routes.patient.personalInformation import patient_personal_info_route
+from routes.patient.profile import patient_personal_info_route
 def create_app():
     app = Flask(__name__)
     
