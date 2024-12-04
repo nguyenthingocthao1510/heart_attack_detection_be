@@ -1,16 +1,27 @@
 import pickle
+import threading
 from copy import deepcopy
 from flask import request, jsonify
+from werkzeug.datastructures import MultiDict
 import pandas as pd
 from controllers.patient.Diagnosis.preprocess import DataPreprocessor
+from middlewares.validators.patient.diagnosisForm import SensorInputForm, UserInputForm
 
-class HeartAttackPredictor:
+class DiagnosisService:
     def __init__(self):
         with open(r'controllers/patient/Diagnosis/svc.pkl', 'rb') as model_file:
             self.svc = pickle.load(model_file)
         with open(r'controllers/patient/Diagnosis/scaler.pkl', 'rb') as scaler_file:
             self.scaler = pickle.load(scaler_file)
         
+        self.temp_storage = {
+            'sensor_input': None,
+            'user_input': None
+        }
+
+        self.storage_lock = threading.Lock()
+        self.data_ready = threading.Event()
+
         self.model_cols = [
             'age', 'trtbps', 'chol', 'thalachh', 'oldpeak',
             'sex_1', 'exng_1', 'caa_1', 'caa_2', 'caa_3', 'caa_4',
@@ -18,23 +29,62 @@ class HeartAttackPredictor:
             'restecg_1', 'restecg_2', 'slp_1', 'slp_2',
             'thall_1', 'thall_2', 'thall_3'
         ]
+
         self.preprocessor = DataPreprocessor()
 
+    def receive_sensor_data(self):
+        if request.method == 'POST':
+            form = SensorInputForm(MultiDict(data=request.get_json()))
+            if not form.validate():
+                return jsonify({'error': 'Invalid sensor data', 'details': form.errors}), 400
+
+            with self.storage_lock:
+                self.temp_storage['sensor_input'] = form.data
+                self.check_data_ready()
+
+            return jsonify({
+                'message': 'successfully received sensor data',
+                'data': form.data
+            }), 200
+        
+    def receive_user_data(self):
+        if request.method == 'POST':
+            data = request.get_json()
+            
+            data = self.preprocessor.preprocess(data)
+
+            form = UserInputForm(MultiDict(data))
+            if not form.validate():
+                return jsonify({'error': 'Invalid user input', 'details': form.errors}), 400
+            
+            with self.storage_lock:
+                self.temp_storage['user_input'] = data
+                self.check_data_ready()
+
+            return jsonify({
+                'message': 'successfully received user data',
+                'data': data
+            }), 200
+    
+    def check_data_ready(self):
+        if self.temp_storage['sensor_input'] and self.temp_storage['user_input']:
+            self.data_ready.set()
+
     def predict(self):
-        data = request.get_json()
 
-        saved_data = deepcopy(data)
+        self.data_ready.wait()
 
-        data = self.preprocessor.preprocess(data)
+        with self.storage_lock:
+            sensor_input = self.temp_storage['sensor_input']
+            user_input = self.temp_storage['user_input']
 
-        required_keys = [
-            'age', 'trtbps', 'chol', 'thalachh', 'oldpeak', 
-            'sex', 'exng', 'caa', 'cp', 'fbs', 'restecg', 'slp', 'thall'
-        ]
-        if not data or not all(key in data for key in required_keys):
-            return jsonify({'error': 'Missing value, please enter again.'}), 400
+        if not sensor_input or not user_input:
+            return jsonify({'error': 'Missing data. Ensure both sensor and user inputs are provided.'}), 400
 
-        df = pd.DataFrame([data])
+        combined_data = {**sensor_input, **user_input}
+        saved_data = deepcopy(combined_data)
+
+        df = pd.DataFrame([combined_data])
 
         df = pd.get_dummies(df, columns=['sex', 'exng', 'caa', 'cp', 'fbs', 'restecg', 'slp', 'thall'])
 
