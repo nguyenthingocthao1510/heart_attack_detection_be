@@ -1,6 +1,5 @@
 from flask import Blueprint, Flask
 from controllers.patient.Diagnosis.predict import DiagnosisService
-from csrfconfig.app import CSRFConfig
 
 diagnosis_route = Blueprint('diagnosis', __name__)
 

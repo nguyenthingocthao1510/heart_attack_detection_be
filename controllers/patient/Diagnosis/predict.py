@@ -2,10 +2,8 @@ import pickle
 import threading
 from copy import deepcopy
 from flask import request, jsonify
-from werkzeug.datastructures import MultiDict
 import pandas as pd
 from controllers.patient.Diagnosis.preprocess import DataPreprocessor
-from middlewares.validators.patient.diagnosisForm import SensorInputForm, UserInputForm
 
 class DiagnosisService:
     def __init__(self):
@@ -36,10 +34,6 @@ class DiagnosisService:
         if request.method == 'POST':
             data=request.get_json()
 
-            # form = SensorInputForm(MultiDict(data))
-            # if not form.validate():
-            #     return jsonify({'error': 'Invalid sensor data', 'details': form.errors}), 400
-
             with self.storage_lock:
                 self.temp_storage['sensor_input'] = data
                 self.check_data_ready()
@@ -54,10 +48,6 @@ class DiagnosisService:
             data = request.get_json()
             
             data = self.preprocessor.preprocess(data)
-
-            form = UserInputForm(MultiDict(data))
-            if not form.validate():
-                return jsonify({'error': 'Invalid user input', 'details': form.errors}), 400
             
             with self.storage_lock:
                 self.temp_storage['user_input'] = data
