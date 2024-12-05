@@ -1,9 +1,12 @@
-from flask import Blueprint
+from flask import Blueprint, Flask
 from controllers.patient.Diagnosis.predict import DiagnosisService
+from csrfconfig.app import CSRFConfig
 
 diagnosis_route = Blueprint('diagnosis', __name__)
 
 diagnosis_service = DiagnosisService()
+
+app = Flask(__name__)
 
 @diagnosis_route.route('/patient/diagnosis', methods=['POST'])
 def diagnose_heart_attack():

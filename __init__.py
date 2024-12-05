@@ -1,7 +1,5 @@
-
 from flask import Flask
-from flask_wtf.csrf import CSRFProtect
-import os
+from csrfconfig.app import CSRFConfig
 # ADMIN
 from routes.admin.account import account_route
 from routes.admin.module import module_route
@@ -29,14 +27,13 @@ from routes.category.Prescription.prescription import prescription_route
 from routes.category.Doctor.doctor import doctor_route
 
 from routes.patient.profile import patient_personal_info_route
+
 def create_app():
     app = Flask(__name__)
 
-    url_prefix = '/api'
+    csrf = CSRFConfig(app)
 
-    WTFORM_SECRET_KEY = os.urandom(32)
-    app.config['SECRET_KEY'] = WTFORM_SECRET_KEY
-    csrf = CSRFProtect(app)
+    url_prefix = '/api'
 
     app.register_blueprint(account_route, url_prefix = url_prefix)
     app.register_blueprint(module_route, url_prefix = url_prefix)
@@ -48,8 +45,8 @@ def create_app():
     # app.register_blueprint(permission_route, url_prefix = url_prefix)
     app.register_blueprint(module_role_route, url_prefix=url_prefix)
     
-    csrf.exempt(diagnosis_route)
     app.register_blueprint(diagnosis_route, url_prefix = url_prefix)
+    csrf.exempt(diagnosis_route)
     app.register_blueprint(patient_personal_info_route, url_prefix=url_prefix)
 
     threading.Thread(target=generate_heartbeat, daemon=True).start()

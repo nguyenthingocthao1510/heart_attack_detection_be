@@ -34,17 +34,19 @@ class DiagnosisService:
 
     def receive_sensor_data(self):
         if request.method == 'POST':
-            form = SensorInputForm(MultiDict(data=request.get_json()))
-            if not form.validate():
-                return jsonify({'error': 'Invalid sensor data', 'details': form.errors}), 400
+            data=request.get_json()
+
+            # form = SensorInputForm(MultiDict(data))
+            # if not form.validate():
+            #     return jsonify({'error': 'Invalid sensor data', 'details': form.errors}), 400
 
             with self.storage_lock:
-                self.temp_storage['sensor_input'] = form.data
+                self.temp_storage['sensor_input'] = data
                 self.check_data_ready()
 
             return jsonify({
                 'message': 'successfully received sensor data',
-                'data': form.data
+                'data': data
             }), 200
         
     def receive_user_data(self):
