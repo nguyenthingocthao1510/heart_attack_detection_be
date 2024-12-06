@@ -18,6 +18,29 @@ def register():
         print('Error: ', str(e))
         return Response(status=409)
 
+def update_password(account_id):
+    try:
+        user_password = request.json.get('user_password', '').strip()
+        if not user_password or len(user_password) < 1:
+            return {"message": "Password must be at least 1 characters long"}, 400
+
+        password_salt = generate_salt()
+        password_hash = generate_hash(user_password, password_salt)
+
+        query = '''
+        UPDATE account 
+        SET password_salt = %s, password_hash = %s 
+        WHERE id = %s
+        '''
+        if db_write(query, (password_salt, password_hash, account_id)):
+            return {"message": "Password updated successfully"}, 200
+        else:
+            return {"message": "Failed to update password"}, 500
+
+    except Exception as e:
+        print('Error: ', str(e))
+        return {"message": "An error occurred while updating password"}, 500
+
 def login():
     user_username = request.json['username']
     user_password = request.json['password']
