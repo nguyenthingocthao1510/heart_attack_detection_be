@@ -1,10 +1,14 @@
 from flask import Blueprint
-from controllers.admin.account import register, login, get_all, get_account_on_role
+from controllers.admin.account import register, login, get_all, get_account_on_role, update_password
 account_route = Blueprint('account',__name__)
 
 @account_route.route('/register', methods = ['POST'])
 def register_account():
     return register()
+
+@account_route.route('/update-password/id=<int:id>', methods = ['PUT'])
+def update_password_account(id):
+    return update_password(id)
 
 @account_route.route('/login', methods = ['POST'])
 def login_account():
