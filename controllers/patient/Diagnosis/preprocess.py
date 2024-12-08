@@ -20,7 +20,7 @@ class DataPreprocessor:
             'Reversible defect': 3
         }
     
-    def preprocess(self, data):
+    def preprocess(self, data: int) -> int:
         data['sex'] = 1 if data['sex'] == 'Male' else 0
         data['exng'] = 1 if data['exng'] == 'Yes' else 0
         data['fbs'] = 1 if data['fbs'] > 120 else 0
@@ -30,3 +30,13 @@ class DataPreprocessor:
         data['thall'] = self.thall_mapping.get(data['thall'], 0)
         
         return data
+    
+    def encode_restecg(self, data: int) -> int:
+        if 510 <= data <= 512:
+            return 0
+        elif 46 < data < 510 or 512 < data <= 976:
+            return 1
+        elif data <= 46 or data > 976:
+            return 2
+        else:
+            return -1
