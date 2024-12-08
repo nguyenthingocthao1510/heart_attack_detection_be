@@ -33,8 +33,6 @@ class DiagnosisService:
     def receive_sensor_data(self):
         if request.method == 'POST':
             data=request.get_json()
-            print(data)
-
             data['restecg'] = self.preprocessor.encode_restecg(int(data['restecg']))
 
             with self.storage_lock:
@@ -49,7 +47,6 @@ class DiagnosisService:
     def receive_user_data(self):
         if request.method == 'POST':
             data = request.get_json()
-            print(data)
             data = self.preprocessor.preprocess(data)
             
             with self.storage_lock:
