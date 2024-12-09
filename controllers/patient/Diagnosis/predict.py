@@ -1,9 +1,9 @@
-import pickle
-import threading
+import pickle, threading, time
 from copy import deepcopy
 from flask import request, jsonify
 import pandas as pd
 from controllers.patient.Diagnosis.preprocess import DataPreprocessor
+from utils.logger import Logger
 
 class DiagnosisService:
     def __init__(self):
@@ -30,9 +30,16 @@ class DiagnosisService:
 
         self.preprocessor = DataPreprocessor()
 
+        self.logger = Logger("DiagnosisService")
+
     def receive_sensor_data(self):
         if request.method == 'POST':
+            self.logger.info("Waiting sensor to retrieve data...")
+
             data=request.get_json()
+
+            self.logger.debug(f"Raw sensor data received: {data}")
+
             data['restecg'] = self.preprocessor.encode_restecg(int(data['restecg']))
 
             with self.storage_lock:
@@ -47,6 +54,7 @@ class DiagnosisService:
     def receive_user_data(self):
         if request.method == 'POST':
             data = request.get_json()
+
             data = self.preprocessor.preprocess(data)
             
             with self.storage_lock:
@@ -66,15 +74,27 @@ class DiagnosisService:
 
         self.data_ready.wait()
 
-        with self.storage_lock:
-            sensor_input = self.temp_storage['sensor_input']
-            user_input = self.temp_storage['user_input']
+        time_out = 10  
+        interval = 1
+        time_passed = 0
 
-        if not sensor_input or not user_input:
-            return jsonify({'error': 'Missing data. Ensure both sensor and user inputs are provided.'}), 400
+        while True:
+            with self.storage_lock:
+                sensor_input = self.temp_storage['sensor_input']
+                user_input = self.temp_storage['user_input']
+
+            if sensor_input and user_input:
+                break
+
+            time.sleep(interval)
+            time_passed += interval
+
+            if time_passed >= time_out:
+                return jsonify({'error': 'Timed out waiting for inputs. Please try again.'}), 408
 
         combined_data = {**sensor_input, **user_input}
         saved_data = deepcopy(combined_data)
+        self.temp_storage['sensor_input'] = None
 
         df = pd.DataFrame([combined_data])
 
