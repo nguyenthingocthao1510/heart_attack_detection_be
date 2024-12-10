@@ -7,9 +7,9 @@ from utils.logger import Logger
 
 class ManualDiagnosis:
     def __init__(self):
-        with open(r'controllers/patient/Diagnosis/svc.pkl', 'rb') as model_file:
+        with open(r'controllers/patient/Diagnosis/pickle/lr.pkl', 'rb') as model_file:
             self.svc = pickle.load(model_file)
-        with open(r'controllers/patient/Diagnosis/scaler.pkl', 'rb') as scaler_file:
+        with open(r'controllers/patient/Diagnosis/pickle/scaler.pkl', 'rb') as scaler_file:
             self.scaler = pickle.load(scaler_file)
         
         self.temp_storage = {

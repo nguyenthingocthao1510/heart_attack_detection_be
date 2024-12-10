@@ -7,14 +7,29 @@ from utils.logger import Logger
 
 class ScheduledDiagnosis:
     def __init__(self):
-        with open(r'controllers/patient/Diagnosis/svc.pkl', 'rb') as model_file:
+        with open(r'controllers/patient/Diagnosis/pickle/lr.pkl', 'rb') as model_file:
             self.svc = pickle.load(model_file)
-        with open(r'controllers/patient/Diagnosis/scaler.pkl', 'rb') as scaler_file:
+        with open(r'controllers/patient/Diagnosis/pickle/scaler.pkl', 'rb') as scaler_file:
             self.scaler = pickle.load(scaler_file)
         
         self.temp_storage = {
-            'sensor_input': None,
-            'user_input': None
+            'sensor_input': {
+                "thalachh": 150,
+                "restecg": 510
+            },
+            'user_input': {
+                "age": 63,
+                "trtbps": 145,
+                "chol": 233,
+                "oldpeak": 2.3,
+                "sex": "Male",
+                "exng": "No",
+                "caa": 0,
+                "cp": "None",
+                "fbs": 1,
+                "slp": "None",
+                "thall": "None"
+            }
         }
 
         self.storage_lock = threading.Lock()
@@ -30,7 +45,7 @@ class ScheduledDiagnosis:
 
         self.preprocessor = DataPreprocessor()
 
-        self.logger = Logger("ManualDiagnosis")
+        self.logger = Logger("Scheduled")
 
     def receive_sensor_data(self):
         if request.method == 'POST':
@@ -56,11 +71,13 @@ class ScheduledDiagnosis:
             user_input = self.temp_storage['user_input']
 
         if not sensor_input or not user_input:
-            print("Incomplete data for periodic prediction.")
+            self.logger.info("Missing data for prediction")
             return
 
         combined_data = {**sensor_input, **user_input}
         copied_data = deepcopy(combined_data)
+
+        self.logger.debug(f"Combined data before preprocessing: {combined_data}")
 
         combined_data = self.preprocessor.preprocess(combined_data)
         combined_data['restecg'] = self.preprocessor.encode_restecg(combined_data['restecg'])
@@ -83,9 +100,8 @@ class ScheduledDiagnosis:
             'timestamp': time.strftime('%Y-%m-%d %H:%M:%S')
         }
 
-        return jsonify({
-            'result': result
-        }), 200
+        self.logger.debug(f"Scheduled prediction result: {result}")
+        return result
     
     def run_scheduler(self):
         schedule.every(5).minutes.do(self.schedule_predict)

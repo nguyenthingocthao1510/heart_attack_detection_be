@@ -45,7 +45,8 @@ def create_app():
     
     app.register_blueprint(diagnosis_route, url_prefix = url_prefix)
     app.register_blueprint(patient_personal_info_route, url_prefix=url_prefix)
-    threading.Thread(target=ScheduledDiagnosis.run_scheduler, daemon=True).start()
+    diagnosis_service = ScheduledDiagnosis()
+    threading.Thread(target=diagnosis_service.run_scheduler, daemon=True).start()
 
     threading.Thread(target=generate_heartbeat, daemon=True).start()
     threading.Thread(target=generate_temperature, daemon=True).start()
