@@ -1,15 +1,15 @@
 from flask import Blueprint, Flask
-from controllers.patient.Diagnosis.predict import DiagnosisService
+from controllers.patient.Diagnosis.manualPredict import ManualDiagnosis
 
 diagnosis_route = Blueprint('diagnosis', __name__)
 
-diagnosis_service = DiagnosisService()
+diagnosis_service = ManualDiagnosis()
 
 app = Flask(__name__)
 
 @diagnosis_route.route('/patient/diagnosis', methods=['POST'])
 def diagnose_heart_attack():
-    return diagnosis_service.predict()
+    return diagnosis_service.manual_predict()
 
 @diagnosis_route.route('/patient/receive-sensor-data', methods=['POST'])
 def receive_sensor_data():

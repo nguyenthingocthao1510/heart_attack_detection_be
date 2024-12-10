@@ -1,11 +1,11 @@
-import pickle, threading, time
+import pickle, threading, time, schedule
 from copy import deepcopy
 from flask import request, jsonify
 import pandas as pd
 from controllers.patient.Diagnosis.preprocess import DataPreprocessor
 from utils.logger import Logger
 
-class DiagnosisService:
+class ScheduledDiagnosis:
     def __init__(self):
         with open(r'controllers/patient/Diagnosis/svc.pkl', 'rb') as model_file:
             self.svc = pickle.load(model_file)
@@ -30,7 +30,7 @@ class DiagnosisService:
 
         self.preprocessor = DataPreprocessor()
 
-        self.logger = Logger("DiagnosisService")
+        self.logger = Logger("ManualDiagnosis")
 
     def receive_sensor_data(self):
         if request.method == 'POST':
@@ -39,8 +39,6 @@ class DiagnosisService:
             data=request.get_json()
 
             self.logger.debug(f"Raw sensor data received: {data}")
-
-            data['restecg'] = self.preprocessor.encode_restecg(int(data['restecg']))
 
             with self.storage_lock:
                 self.temp_storage['sensor_input'] = data
@@ -51,55 +49,26 @@ class DiagnosisService:
                 'data': data
             }), 200
         
-    def receive_user_data(self):
-        if request.method == 'POST':
-            data = request.get_json()
+    def schedule_predict(self):
+        self.logger.info("Start scheduled prediction...")
+        with self.storage_lock:
+            sensor_input = self.temp_storage['sensor_input']
+            user_input = self.temp_storage['user_input']
 
-            data = self.preprocessor.preprocess(data)
-            
-            with self.storage_lock:
-                self.temp_storage['user_input'] = data
-                self.check_data_ready()
-
-            return jsonify({
-                'message': 'successfully received user data',
-                'data': data
-            }), 200
-    
-    def check_data_ready(self):
-        if self.temp_storage['sensor_input'] and self.temp_storage['user_input']:
-            self.data_ready.set()
-
-    def predict(self):
-
-        self.data_ready.wait()
-
-        time_out = 10  
-        interval = 1
-        time_passed = 0
-
-        while True:
-            with self.storage_lock:
-                sensor_input = self.temp_storage['sensor_input']
-                user_input = self.temp_storage['user_input']
-
-            if sensor_input and user_input:
-                break
-
-            time.sleep(interval)
-            time_passed += interval
-
-            if time_passed >= time_out:
-                return jsonify({'error': 'Timed out waiting for inputs. Please try again.'}), 408
+        if not sensor_input or not user_input:
+            print("Incomplete data for periodic prediction.")
+            return
 
         combined_data = {**sensor_input, **user_input}
-        saved_data = deepcopy(combined_data)
-        self.temp_storage['sensor_input'] = None
+        copied_data = deepcopy(combined_data)
+
+        combined_data = self.preprocessor.preprocess(combined_data)
+        combined_data['restecg'] = self.preprocessor.encode_restecg(combined_data['restecg'])
+
+        self.logger.debug(f"Combined data after preprocessing: {combined_data}")
 
         df = pd.DataFrame([combined_data])
-
         df = pd.get_dummies(df, columns=['sex', 'exng', 'caa', 'cp', 'fbs', 'restecg', 'slp', 'thall'])
-
         df = df.reindex(columns=self.model_cols, fill_value=0)
 
         con_cols = ['age', 'trtbps', 'chol', 'thalachh', 'oldpeak']
@@ -107,7 +76,20 @@ class DiagnosisService:
 
         prediction = self.svc.predict(df)
 
-        return jsonify({
+        result = {
             'prediction': int(prediction[0]),
-            'diagnosis': saved_data
+            'thalachh': copied_data['thalachh'],
+            'restecg': copied_data['restecg'],
+            'timestamp': time.strftime('%Y-%m-%d %H:%M:%S')
+        }
+
+        return jsonify({
+            'result': result
         }), 200
+    
+    def run_scheduler(self):
+        schedule.every(5).minutes.do(self.schedule_predict)
+        while True:
+            schedule.run_pending()
+            time.sleep(1)
+
