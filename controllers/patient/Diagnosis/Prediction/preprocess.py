@@ -20,7 +20,7 @@ class DataPreprocessor:
             'Reversible defect': 3
         }
     
-    def preprocess(self, data: int) -> int:
+    def preprocess(self, data) -> int:
         data['sex'] = 1 if data['sex'] == 'Male' else 0
         data['exng'] = 1 if data['exng'] == 'Yes' else 0
         data['fbs'] = 1 if data['fbs'] > 120 else 0

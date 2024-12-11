@@ -2,7 +2,7 @@ import pickle, threading, time
 from copy import deepcopy
 from flask import request, jsonify
 import pandas as pd
-from controllers.patient.Diagnosis.preprocess import DataPreprocessor
+from controllers.patient.Diagnosis.Prediction.preprocess import DataPreprocessor
 from utils.logger import Logger
 
 class ManualDiagnosis:
