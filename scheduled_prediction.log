@@ -1,48 +1,19 @@
-2024-12-11 16:17:25,873 - ScheduledPrediction - INFO - Starting scheduler after a brief delay...
-2024-12-11 16:17:25,893 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+2024-12-13 16:39:16,412 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
  * Running on http://127.0.0.1:5000
-2024-12-11 16:17:25,893 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
-2024-12-11 16:17:25,895 - werkzeug - INFO -  * Restarting with stat
-2024-12-11 16:17:28,067 - ScheduledPrediction - INFO - Starting scheduler after a brief delay...
-2024-12-11 16:17:28,078 - werkzeug - WARNING -  * Debugger is active!
-2024-12-11 16:17:28,081 - werkzeug - INFO -  * Debugger PIN: 159-496-632
-2024-12-11 16:17:40,684 - ScheduledPrediction - INFO - User data received at 2024-12-11 16:17:40
-2024-12-11 16:17:40,685 - werkzeug - INFO - 127.0.0.1 - - [11/Dec/2024 16:17:40] "POST /api/patient/scheduled/receive-user-data HTTP/1.1" 200 -
-2024-12-11 16:17:40,875 - ScheduledPrediction - INFO - scheduler started...
-2024-12-11 16:17:43,068 - ScheduledPrediction - INFO - scheduler started...
-2024-12-11 16:17:43,537 - ScheduledPrediction - INFO - Sensor data received at 2024-12-11 16:17:43
-2024-12-11 16:17:43,537 - ScheduledPrediction - DEBUG - Data ready: Both sensor and user data received.
-2024-12-11 16:17:43,538 - werkzeug - INFO - 127.0.0.1 - - [11/Dec/2024 16:17:43] "POST /api/patient/scheduled/receive-sensor-data HTTP/1.1" 200 -
-2024-12-11 16:17:55,882 - schedule - DEBUG - Running job Job(interval=15, unit=seconds, do=scheduled_predict, args=(), kwargs={})
-2024-12-11 16:17:55,882 - ScheduledPrediction - INFO - Scheduler triggered prediction...
-2024-12-11 16:17:55,882 - ScheduledPrediction - DEBUG - User data in temp storage: {}
-2024-12-11 16:17:55,882 - ScheduledPrediction - DEBUG - Sensor data in temp storage: {}
-2024-12-11 16:17:58,073 - schedule - DEBUG - Running job Job(interval=15, unit=seconds, do=scheduled_predict, args=(), kwargs={})
-2024-12-11 16:17:58,074 - ScheduledPrediction - INFO - Scheduler triggered prediction...
-2024-12-11 16:17:58,075 - ScheduledPrediction - DEBUG - User data in temp storage: {}
-2024-12-11 16:17:58,076 - ScheduledPrediction - DEBUG - Sensor data in temp storage: {}
-2024-12-11 16:18:59,324 - ScheduledPrediction - INFO - Starting scheduler after a brief delay...
-2024-12-11 16:18:59,343 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
- * Running on http://127.0.0.1:5000
-2024-12-11 16:18:59,343 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
-2024-12-11 16:18:59,344 - werkzeug - INFO -  * Restarting with stat
-2024-12-11 16:19:01,561 - ScheduledPrediction - INFO - Starting scheduler after a brief delay...
-2024-12-11 16:19:01,574 - werkzeug - WARNING -  * Debugger is active!
-2024-12-11 16:19:01,577 - werkzeug - INFO -  * Debugger PIN: 159-496-632
-2024-12-11 16:19:05,704 - ScheduledPrediction - INFO - Sensor data received at 2024-12-11 16:19:05
-2024-12-11 16:19:05,705 - werkzeug - INFO - 127.0.0.1 - - [11/Dec/2024 16:19:05] "POST /api/patient/scheduled/receive-sensor-data HTTP/1.1" 200 -
-2024-12-11 16:19:09,119 - ScheduledPrediction - INFO - User data received at 2024-12-11 16:19:09
-2024-12-11 16:19:09,119 - ScheduledPrediction - DEBUG - Data ready: Both sensor and user data received.
-2024-12-11 16:19:09,120 - werkzeug - INFO - 127.0.0.1 - - [11/Dec/2024 16:19:09] "POST /api/patient/scheduled/receive-user-data HTTP/1.1" 200 -
-2024-12-11 16:19:14,326 - ScheduledPrediction - INFO - scheduler started...
-2024-12-11 16:19:16,562 - ScheduledPrediction - INFO - scheduler started...
-2024-12-11 16:19:29,334 - schedule - DEBUG - Running job Job(interval=15, unit=seconds, do=scheduled_predict, args=(), kwargs={})
-2024-12-11 16:19:29,334 - ScheduledPrediction - INFO - Scheduler triggered prediction...
-2024-12-11 16:19:29,335 - ScheduledPrediction - DEBUG - User data in temp storage: {}
-2024-12-11 16:19:29,346 - ScheduledPrediction - DEBUG - Sensor data in temp storage: {}
-2024-12-11 16:19:31,568 - schedule - DEBUG - Running job Job(interval=15, unit=seconds, do=scheduled_predict, args=(), kwargs={})
-2024-12-11 16:19:31,568 - ScheduledPrediction - INFO - Scheduler triggered prediction...
-2024-12-11 16:19:31,568 - ScheduledPrediction - DEBUG - User data in temp storage: {}
-2024-12-11 16:19:31,568 - ScheduledPrediction - DEBUG - Sensor data in temp storage: {}
-2024-12-11 16:19:59,352 - ScheduledPrediction - WARNING - No data received within the timeout.
-2024-12-11 16:20:01,580 - ScheduledPrediction - WARNING - No data received within the timeout.
+2024-12-13 16:39:16,413 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2024-12-13 16:39:16,414 - werkzeug - INFO -  * Restarting with stat
+2024-12-13 16:39:18,731 - werkzeug - WARNING -  * Debugger is active!
+2024-12-13 16:39:18,734 - werkzeug - INFO -  * Debugger PIN: 915-193-549
+2024-12-13 16:39:24,622 - ScheduledDiagnosis - INFO - Waiting sensor to retrieve data...
+2024-12-13 16:39:24,858 - ScheduledDiagnosis - DEBUG - Raw user data received: {'thalachh': 120.0, 'resecg': 510}
+2024-12-13 16:39:24,919 - werkzeug - INFO - 127.0.0.1 - - [13/Dec/2024 16:39:24] "GET /api/patient/scheduled/receive-sensor-data HTTP/1.1" 200 -
+2024-12-13 16:40:14,809 - werkzeug - INFO -  * Detected change in 'D:\\heart-attack-detection\\heart-attack-detection-be\\controllers\\patient\\Diagnosis\\Prediction\\scheduledPredict.py', reloading
+2024-12-13 16:40:14,975 - werkzeug - INFO -  * Restarting with stat
+2024-12-13 16:40:17,526 - werkzeug - WARNING -  * Debugger is active!
+2024-12-13 16:40:17,529 - werkzeug - INFO -  * Debugger PIN: 915-193-549
+2024-12-13 16:40:19,912 - werkzeug - INFO -  * Detected change in 'D:\\heart-attack-detection\\heart-attack-detection-be\\controllers\\patient\\Diagnosis\\Prediction\\scheduledPredict.py', reloading
+2024-12-13 16:40:20,071 - werkzeug - INFO -  * Restarting with stat
+2024-12-13 16:40:22,345 - werkzeug - WARNING -  * Debugger is active!
+2024-12-13 16:40:22,352 - werkzeug - INFO -  * Debugger PIN: 915-193-549
+2024-12-13 16:40:24,739 - werkzeug - INFO -  * Detected change in 'D:\\heart-attack-detection\\heart-attack-detection-be\\controllers\\patient\\Diagnosis\\Prediction\\scheduledPredict.py', reloading
+2024-12-13 16:40:24,904 - werkzeug - INFO -  * Restarting with stat

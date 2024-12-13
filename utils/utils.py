@@ -66,6 +66,13 @@ def generate_jwt_token(content):
     token = encoded_content  # The token is already a string in modern versions of PyJWT
     return token
 
+def decode_token(token):
+    JWT_SECRET_KEY = os.getenv("JWT_SECRET_KEY")
+    if not JWT_SECRET_KEY:
+        raise ValueError("JWT_SECRET_KEY is not set in the environment variables")
+    
+    return jwt.decode(token, JWT_SECRET_KEY, algorithms=['HS256'])
+
 def validate_user(username, password):
     # Lấy thông tin người dùng từ database
     current_user = db_read('SELECT * FROM account WHERE username = %s', (username,))
