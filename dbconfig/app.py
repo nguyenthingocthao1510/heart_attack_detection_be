@@ -9,5 +9,5 @@ db = pymysql.connections.Connection(
     host=hostname,
     user=user,
     password=password,
-    db=database
+    db=database,
 )
