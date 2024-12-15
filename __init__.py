@@ -1,4 +1,3 @@
-
 from flask import Flask
 # ADMIN
 from routes.admin.account import account_route
@@ -27,9 +26,10 @@ from routes.category.Prescription.prescription import prescription_route
 from routes.category.Doctor.doctor import doctor_route
 
 from routes.patient.profile import patient_personal_info_route
+
 def create_app():
     app = Flask(__name__)
-    
+
     url_prefix = '/api'
 
     app.register_blueprint(account_route, url_prefix = url_prefix)
@@ -41,7 +41,7 @@ def create_app():
     # app.register_blueprint(role_route, url_prefix = url_prefix)
     # app.register_blueprint(permission_route, url_prefix = url_prefix)
     app.register_blueprint(module_role_route, url_prefix=url_prefix)
-
+    
     app.register_blueprint(diagnosis_route, url_prefix = url_prefix)
     app.register_blueprint(patient_personal_info_route, url_prefix=url_prefix)
 
