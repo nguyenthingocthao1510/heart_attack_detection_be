@@ -1,4 +1,4 @@
-from dbconfig.app import db
+from config.dbconfig.app import db
 import datetime
 
 class ProfileController:

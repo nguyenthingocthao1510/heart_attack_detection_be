@@ -1,6 +1,7 @@
 from flask import request, Response, jsonify
 from utils.utils import generate_salt,generate_hash,generate_jwt_token, db_write, db_read, validate_user
-from dbconfig.app import db
+from config.dbconfig.app import db
+from config.redisconfig.app import redis_client
 
 #REGISTER
 def register():
@@ -48,6 +49,17 @@ def login():
     user_token = validate_user(user_username, user_password)
 
     if user_token:
+        cur = db.cursor()
+        try: 
+            cur.execute('UPDATE account SET account_status = %s WHERE id = %s', ('Active', user_token['id']))
+            db.commit()
+        except Exception as e:
+            return (f'Error: {str(e)}')
+        finally:
+            cur.close()
+
+        account_id = user_token['id']
+        redis_client.setex("account_id", account_id)
         return jsonify({
             'message': 'Login successfully',
             'jwt_token': user_token['jwt_token'],  
@@ -56,7 +68,34 @@ def login():
         })
     else:
         return Response(status=401) 
+    
+def logout(account_id):
+    cur = db.cursor()
+    try: 
+        cur.execute('UPDATE account SET account_status = %s WHERE id = %s', ('Inactive', account_id))
+        db.commit()
+    except Exception as e:
+        return (f'Error: {str(e)}')
+    finally:
+        cur.close()
 
+def get_active_user():
+    cur = db.cursor()
+    try: 
+        cur.execute('SELECT * FROM account WHERE account_status = %s', 'Active')
+        accounts = cur.fetchall()
+        result = []
+        for a in accounts:
+            result.append({
+                'id': a[0],
+            })
+        return {
+            'data': result
+        }
+    except Exception as e:
+        return (f'Error: {str(e)}')
+    finally:
+        cur.close()
 
 def get_all():
     cur = db.cursor()

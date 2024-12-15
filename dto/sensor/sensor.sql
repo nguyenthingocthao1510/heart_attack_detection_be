@@ -17,3 +17,10 @@ VALUES (4, 120, 510);
 SELECT * FROM temp_sensor_data
 ORDER BY id DESC
 LIMIT 1;
+
+SELECT *
+FROM patient as p
+LEFT JOIN patient_record as pr
+ON p.id = pr.patient_id
+WHERE p.account_id = 21;
+

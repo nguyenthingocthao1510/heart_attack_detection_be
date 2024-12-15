@@ -8,3 +8,4 @@ pyjwt
 flask-cors
 gunicorn
 schedule
+redis

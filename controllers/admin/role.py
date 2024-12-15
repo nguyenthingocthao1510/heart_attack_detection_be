@@ -1,5 +1,5 @@
 from flask import request
-from dbconfig.app import db
+from config.dbconfig.app import db
 
 #GET ALL 
 def get_all():

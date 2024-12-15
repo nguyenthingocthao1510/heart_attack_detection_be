@@ -1,6 +1,6 @@
 import os
 from hashlib import pbkdf2_hmac
-from dbconfig.app import db
+from config.dbconfig.app import db
 import jwt
 from dotenv import load_dotenv
 

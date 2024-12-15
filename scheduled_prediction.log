@@ -17,3 +17,199 @@
 2024-12-13 16:40:22,352 - werkzeug - INFO -  * Debugger PIN: 915-193-549
 2024-12-13 16:40:24,739 - werkzeug - INFO -  * Detected change in 'D:\\heart-attack-detection\\heart-attack-detection-be\\controllers\\patient\\Diagnosis\\Prediction\\scheduledPredict.py', reloading
 2024-12-13 16:40:24,904 - werkzeug - INFO -  * Restarting with stat
+2024-12-15 11:02:47,104 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2024-12-15 11:02:47,106 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2024-12-15 11:02:47,111 - werkzeug - INFO -  * Restarting with stat
+2024-12-15 11:02:51,192 - werkzeug - WARNING -  * Debugger is active!
+2024-12-15 11:02:51,237 - werkzeug - INFO -  * Debugger PIN: 915-193-549
+2024-12-15 11:03:08,854 - werkzeug - INFO - 127.0.0.1 - - [15/Dec/2024 11:03:08] "[33mGET /api/patient/scheduled/receive-user-data HTTP/1.1[0m" 404 -
+2024-12-15 11:03:49,035 - werkzeug - INFO - 127.0.0.1 - - [15/Dec/2024 11:03:49] "POST /api/login HTTP/1.1" 200 -
+2024-12-15 11:04:10,464 - werkzeug - INFO - 127.0.0.1 - - [15/Dec/2024 11:04:10] "[33mGET /api/patient/scheduled/receive-user-data HTTP/1.1[0m" 404 -
+2024-12-15 11:05:33,325 - werkzeug - INFO -  * Detected change in 'D:\\heart-attack-detection\\heart-attack-detection-be\\controllers\\patient\\Diagnosis\\Prediction\\scheduledPredict.py', reloading
+2024-12-15 11:05:33,593 - werkzeug - INFO -  * Restarting with stat
+2024-12-15 11:05:39,450 - werkzeug - WARNING -  * Debugger is active!
+2024-12-15 11:05:39,455 - werkzeug - INFO -  * Debugger PIN: 915-193-549
+2024-12-15 11:06:20,612 - werkzeug - INFO -  * Detected change in 'D:\\heart-attack-detection\\heart-attack-detection-be\\middlewares\\checkLogin.py', reloading
+2024-12-15 11:06:20,920 - werkzeug - INFO -  * Restarting with stat
+2024-12-15 11:06:24,501 - werkzeug - WARNING -  * Debugger is active!
+2024-12-15 11:06:24,511 - werkzeug - INFO -  * Debugger PIN: 915-193-549
+2024-12-15 11:08:07,342 - werkzeug - INFO - 127.0.0.1 - - [15/Dec/2024 11:08:07] "[33mGET /api/patient/scheduled/receive-user-data HTTP/1.1[0m" 404 -
+2024-12-15 11:08:40,324 - werkzeug - INFO -  * Detected change in 'D:\\heart-attack-detection\\heart-attack-detection-be\\middlewares\\checkLogin.py', reloading
+2024-12-15 11:08:40,533 - werkzeug - INFO -  * Restarting with stat
+2024-12-15 11:11:52,856 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2024-12-15 11:11:52,857 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2024-12-15 11:11:52,861 - werkzeug - INFO -  * Restarting with stat
+2024-12-15 11:11:55,550 - werkzeug - WARNING -  * Debugger is active!
+2024-12-15 11:11:55,554 - werkzeug - INFO -  * Debugger PIN: 915-193-549
+2024-12-15 11:11:59,699 - werkzeug - INFO - 127.0.0.1 - - [15/Dec/2024 11:11:59] "[33mGET /api/patient/scheduled/receive-user-data HTTP/1.1[0m" 404 -
+2024-12-15 11:12:29,509 - werkzeug - INFO -  * Detected change in 'D:\\heart-attack-detection\\heart-attack-detection-be\\controllers\\patient\\Diagnosis\\Prediction\\scheduledPredict.py', reloading
+2024-12-15 11:12:29,695 - werkzeug - INFO -  * Restarting with stat
+2024-12-15 11:12:32,387 - werkzeug - WARNING -  * Debugger is active!
+2024-12-15 11:12:32,390 - werkzeug - INFO -  * Debugger PIN: 915-193-549
+2024-12-15 11:12:49,447 - werkzeug - INFO -  * Detected change in 'D:\\heart-attack-detection\\heart-attack-detection-be\\controllers\\patient\\Diagnosis\\Prediction\\scheduledPredict.py', reloading
+2024-12-15 11:12:49,657 - werkzeug - INFO -  * Restarting with stat
+2024-12-15 11:12:53,139 - werkzeug - WARNING -  * Debugger is active!
+2024-12-15 11:12:53,143 - werkzeug - INFO -  * Debugger PIN: 915-193-549
+2024-12-15 11:12:58,909 - werkzeug - INFO -  * Detected change in 'D:\\heart-attack-detection\\heart-attack-detection-be\\controllers\\patient\\Diagnosis\\Prediction\\scheduledPredict.py', reloading
+2024-12-15 11:12:59,099 - werkzeug - INFO -  * Restarting with stat
+2024-12-15 11:13:01,831 - werkzeug - WARNING -  * Debugger is active!
+2024-12-15 11:13:01,836 - werkzeug - INFO -  * Debugger PIN: 915-193-549
+2024-12-15 11:13:03,161 - werkzeug - INFO -  * Detected change in 'D:\\heart-attack-detection\\heart-attack-detection-be\\controllers\\patient\\Diagnosis\\Prediction\\scheduledPredict.py', reloading
+2024-12-15 11:13:03,383 - werkzeug - INFO -  * Restarting with stat
+2024-12-15 11:13:06,062 - werkzeug - WARNING -  * Debugger is active!
+2024-12-15 11:13:06,065 - werkzeug - INFO -  * Debugger PIN: 915-193-549
+2024-12-15 11:13:20,572 - ScheduledDiagnosis - DEBUG - Account id: {account_id}
+2024-12-15 11:13:20,573 - ScheduledDiagnosis - ERROR - User has not logged in
+2024-12-15 11:13:20,630 - werkzeug - INFO - 127.0.0.1 - - [15/Dec/2024 11:13:20] "[35m[1mGET /api/patient/scheduled/receive-user-data HTTP/1.1[0m" 500 -
+2024-12-15 11:14:51,837 - ScheduledDiagnosis - INFO - Waiting sensor to retrieve data...
+2024-12-15 11:14:52,045 - ScheduledDiagnosis - DEBUG - Raw user data received: {'thalachh': 120.0, 'resecg': 510}
+2024-12-15 11:14:52,046 - werkzeug - INFO - 127.0.0.1 - - [15/Dec/2024 11:14:52] "GET /api/patient/scheduled/receive-sensor-data HTTP/1.1" 200 -
+2024-12-15 11:22:11,686 - ScheduledDiagnosis - DEBUG - Account id: {account_id}
+2024-12-15 11:22:11,686 - ScheduledDiagnosis - ERROR - User has not logged in
+2024-12-15 11:22:11,689 - werkzeug - INFO - 127.0.0.1 - - [15/Dec/2024 11:22:11] "[35m[1mGET /api/patient/scheduled/receive-user-data HTTP/1.1[0m" 500 -
+2024-12-15 11:24:36,206 - werkzeug - INFO -  * Detected change in 'D:\\heart-attack-detection\\heart-attack-detection-be\\middlewares\\checkLogin.py', reloading
+2024-12-15 11:24:36,453 - werkzeug - INFO -  * Restarting with stat
+2024-12-15 11:24:40,139 - werkzeug - WARNING -  * Debugger is active!
+2024-12-15 11:24:40,144 - werkzeug - INFO -  * Debugger PIN: 915-193-549
+2024-12-15 11:25:54,385 - check_login - DEBUG - Checking for Authorization header...
+2024-12-15 11:25:54,386 - check_login - ERROR - Authorization header format is incorrect
+2024-12-15 11:25:54,387 - ScheduledDiagnosis - DEBUG - Account id: None
+2024-12-15 11:25:54,387 - ScheduledDiagnosis - ERROR - User has not logged in
+2024-12-15 11:25:54,394 - werkzeug - INFO - 127.0.0.1 - - [15/Dec/2024 11:25:54] "[35m[1mGET /api/patient/scheduled/receive-user-data HTTP/1.1[0m" 500 -
+2024-12-15 11:26:24,975 - werkzeug - INFO -  * Detected change in 'D:\\heart-attack-detection\\heart-attack-detection-be\\middlewares\\checkLogin.py', reloading
+2024-12-15 11:26:25,199 - werkzeug - INFO -  * Restarting with stat
+2024-12-15 11:26:28,366 - werkzeug - WARNING -  * Debugger is active!
+2024-12-15 11:26:28,370 - werkzeug - INFO -  * Debugger PIN: 915-193-549
+2024-12-15 11:26:28,561 - werkzeug - INFO -  * Detected change in 'D:\\heart-attack-detection\\heart-attack-detection-be\\middlewares\\checkLogin.py', reloading
+2024-12-15 11:26:28,741 - werkzeug - INFO -  * Restarting with stat
+2024-12-15 11:26:38,313 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2024-12-15 11:26:38,314 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2024-12-15 11:26:38,316 - werkzeug - INFO -  * Restarting with stat
+2024-12-15 11:26:40,798 - werkzeug - WARNING -  * Debugger is active!
+2024-12-15 11:26:40,801 - werkzeug - INFO -  * Debugger PIN: 915-193-549
+2024-12-15 11:26:54,742 - check_login - DEBUG - Checking for Authorization header...
+2024-12-15 11:26:54,743 - check_login - ERROR - Authorization header format is incorrect: Basic cGF0aWVudDM6MTIz
+2024-12-15 11:26:54,743 - ScheduledDiagnosis - DEBUG - Account id: None
+2024-12-15 11:26:54,743 - ScheduledDiagnosis - ERROR - User has not logged in
+2024-12-15 11:26:54,749 - werkzeug - INFO - 127.0.0.1 - - [15/Dec/2024 11:26:54] "[35m[1mGET /api/patient/scheduled/receive-user-data HTTP/1.1[0m" 500 -
+2024-12-15 11:27:41,173 - check_login - DEBUG - Checking for Authorization header...
+2024-12-15 11:27:41,174 - check_login - DEBUG - Retrieved token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjJ9.U8WkgeD1jZmjU1YEs0cGMq-6cJ3GXWBf_dXY9GkMtNQ
+2024-12-15 11:27:41,187 - check_login - DEBUG - Decoded user data: {'id': 22}
+2024-12-15 11:27:41,188 - ScheduledDiagnosis - DEBUG - Account id: 22
+2024-12-15 11:27:41,590 - werkzeug - INFO - 127.0.0.1 - - [15/Dec/2024 11:27:41] "GET /api/patient/scheduled/receive-user-data HTTP/1.1" 200 -
+2024-12-15 11:28:10,662 - werkzeug - INFO - 127.0.0.1 - - [15/Dec/2024 11:28:10] "POST /api/login HTTP/1.1" 200 -
+2024-12-15 11:28:14,634 - werkzeug - INFO - 127.0.0.1 - - [15/Dec/2024 11:28:14] "POST /api/login HTTP/1.1" 200 -
+2024-12-15 11:31:28,534 - werkzeug - INFO -  * Detected change in 'D:\\heart-attack-detection\\heart-attack-detection-be\\controllers\\patient\\Diagnosis\\Prediction\\scheduledPredict.py', reloading
+2024-12-15 11:31:28,755 - werkzeug - INFO -  * Restarting with stat
+2024-12-15 11:31:32,884 - werkzeug - WARNING -  * Debugger is active!
+2024-12-15 11:31:32,887 - werkzeug - INFO -  * Debugger PIN: 915-193-549
+2024-12-15 11:31:39,936 - werkzeug - INFO -  * Detected change in 'D:\\heart-attack-detection\\heart-attack-detection-be\\controllers\\patient\\Diagnosis\\Prediction\\scheduledPredict.py', reloading
+2024-12-15 11:31:40,202 - werkzeug - INFO -  * Restarting with stat
+2024-12-15 11:31:43,152 - werkzeug - WARNING -  * Debugger is active!
+2024-12-15 11:31:43,156 - werkzeug - INFO -  * Debugger PIN: 915-193-549
+2024-12-15 11:31:44,540 - werkzeug - INFO -  * Detected change in 'D:\\heart-attack-detection\\heart-attack-detection-be\\controllers\\patient\\Diagnosis\\Prediction\\scheduledPredict.py', reloading
+2024-12-15 11:31:44,762 - werkzeug - INFO -  * Restarting with stat
+2024-12-15 11:31:47,555 - werkzeug - WARNING -  * Debugger is active!
+2024-12-15 11:31:47,560 - werkzeug - INFO -  * Debugger PIN: 915-193-549
+2024-12-15 11:32:43,401 - check_login - DEBUG - Checking for Authorization header...
+2024-12-15 11:32:43,401 - check_login - ERROR - Authorization header is missing
+2024-12-15 11:32:43,402 - ScheduledDiagnosis - DEBUG - Account id: None
+2024-12-15 11:32:43,402 - ScheduledDiagnosis - ERROR - User has not logged in
+2024-12-15 11:32:43,409 - werkzeug - INFO - 127.0.0.1 - - [15/Dec/2024 11:32:43] "[35m[1mGET /api/patient/scheduled/receive-user-data HTTP/1.1[0m" 500 -
+2024-12-15 11:32:52,601 - check_login - DEBUG - Checking for Authorization header...
+2024-12-15 11:32:52,601 - check_login - DEBUG - Retrieved token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjJ9.U8WkgeD1jZmjU1YEs0cGMq-6cJ3GXWBf_dXY9GkMtNQ
+2024-12-15 11:32:52,602 - check_login - DEBUG - Decoded user data: {'id': 22}
+2024-12-15 11:32:52,603 - ScheduledDiagnosis - DEBUG - Account id: 22
+2024-12-15 11:32:53,006 - ScheduledDiagnosis - DEBUG - User data: (<Response 269 bytes [200 OK]>, 200)
+2024-12-15 11:32:53,006 - werkzeug - INFO - 127.0.0.1 - - [15/Dec/2024 11:32:53] "GET /api/patient/scheduled/receive-user-data HTTP/1.1" 200 -
+2024-12-15 11:35:59,202 - werkzeug - INFO - 127.0.0.1 - - [15/Dec/2024 11:35:59] "GET /api/latest-patient-record/accountId=22 HTTP/1.1" 200 -
+2024-12-15 11:49:03,952 - werkzeug - INFO -  * Detected change in 'D:\\heart-attack-detection\\heart-attack-detection-be\\controllers\\admin\\account.py', reloading
+2024-12-15 11:49:04,218 - werkzeug - INFO -  * Restarting with stat
+2024-12-15 12:02:11,521 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2024-12-15 12:02:11,522 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2024-12-15 12:02:11,524 - werkzeug - INFO -  * Restarting with stat
+2024-12-15 12:02:14,927 - werkzeug - WARNING -  * Debugger is active!
+2024-12-15 12:02:14,931 - werkzeug - INFO -  * Debugger PIN: 915-193-549
+2024-12-15 12:02:58,901 - werkzeug - INFO - 127.0.0.1 - - [15/Dec/2024 12:02:58] "POST /api/login HTTP/1.1" 200 -
+2024-12-15 12:03:11,154 - ScheduledDiagnosis - DEBUG - Account id: None
+2024-12-15 12:03:11,155 - ScheduledDiagnosis - ERROR - User has not logged in
+2024-12-15 12:03:11,159 - werkzeug - INFO - 127.0.0.1 - - [15/Dec/2024 12:03:11] "[35m[1mGET /api/patient/scheduled/receive-user-data HTTP/1.1[0m" 500 -
+2024-12-15 13:52:17,798 - werkzeug - INFO -  * Detected change in 'D:\\heart-attack-detection\\heart-attack-detection-be\\controllers\\admin\\account.py', reloading
+2024-12-15 13:52:18,333 - werkzeug - INFO -  * Restarting with stat
+2024-12-15 13:52:25,592 - werkzeug - WARNING -  * Debugger is active!
+2024-12-15 13:52:25,597 - werkzeug - INFO -  * Debugger PIN: 915-193-549
+2024-12-15 14:44:50,874 - werkzeug - INFO -  * Detected change in 'D:\\heart-attack-detection\\heart-attack-detection-be\\controllers\\patient\\patientRecord\\patientRecord.py', reloading
+2024-12-15 14:44:51,540 - werkzeug - INFO -  * Restarting with stat
+2024-12-15 14:44:55,052 - werkzeug - WARNING -  * Debugger is active!
+2024-12-15 14:44:55,064 - werkzeug - INFO -  * Debugger PIN: 915-193-549
+2024-12-15 14:45:01,112 - werkzeug - INFO - 127.0.0.1 - - [15/Dec/2024 14:45:01] "GET /api/latest-patient-record/accountId=22 HTTP/1.1" 200 -
+2024-12-15 14:49:08,372 - werkzeug - INFO -  * Detected change in 'D:\\heart-attack-detection\\heart-attack-detection-be\\controllers\\patient\\patientRecord\\patientRecord.py', reloading
+2024-12-15 14:49:08,626 - werkzeug - INFO -  * Restarting with stat
+2024-12-15 14:49:11,833 - werkzeug - WARNING -  * Debugger is active!
+2024-12-15 14:49:11,837 - werkzeug - INFO -  * Debugger PIN: 915-193-549
+2024-12-15 14:52:53,138 - werkzeug - INFO -  * Detected change in 'D:\\heart-attack-detection\\heart-attack-detection-be\\controllers\\admin\\account.py', reloading
+2024-12-15 14:52:53,316 - werkzeug - INFO -  * Restarting with stat
+2024-12-15 14:57:58,344 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2024-12-15 14:57:58,345 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2024-12-15 14:57:58,346 - werkzeug - INFO -  * Restarting with stat
+2024-12-15 14:58:00,531 - werkzeug - WARNING -  * Debugger is active!
+2024-12-15 14:58:00,536 - werkzeug - INFO -  * Debugger PIN: 915-193-549
+2024-12-15 14:58:08,781 - werkzeug - INFO - 127.0.0.1 - - [15/Dec/2024 14:58:08] "[35m[1mPOST /api/login HTTP/1.1[0m" 500 -
+2024-12-15 14:58:46,995 - werkzeug - INFO -  * Detected change in 'D:\\heart-attack-detection\\heart-attack-detection-be\\controllers\\admin\\account.py', reloading
+2024-12-15 14:58:47,171 - werkzeug - INFO -  * Restarting with stat
+2024-12-15 14:58:50,219 - werkzeug - WARNING -  * Debugger is active!
+2024-12-15 14:58:50,225 - werkzeug - INFO -  * Debugger PIN: 915-193-549
+2024-12-15 14:58:51,493 - werkzeug - INFO -  * Detected change in 'D:\\heart-attack-detection\\heart-attack-detection-be\\controllers\\admin\\account.py', reloading
+2024-12-15 14:58:51,642 - werkzeug - INFO -  * Restarting with stat
+2024-12-15 14:58:53,829 - werkzeug - WARNING -  * Debugger is active!
+2024-12-15 14:58:53,833 - werkzeug - INFO -  * Debugger PIN: 915-193-549
+2024-12-15 14:58:56,179 - werkzeug - INFO -  * Detected change in 'D:\\heart-attack-detection\\heart-attack-detection-be\\controllers\\admin\\account.py', reloading
+2024-12-15 14:58:56,398 - werkzeug - INFO -  * Restarting with stat
+2024-12-15 14:59:11,438 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2024-12-15 14:59:11,438 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2024-12-15 14:59:11,440 - werkzeug - INFO -  * Restarting with stat
+2024-12-15 14:59:13,645 - werkzeug - WARNING -  * Debugger is active!
+2024-12-15 14:59:13,648 - werkzeug - INFO -  * Debugger PIN: 915-193-549
+2024-12-15 14:59:19,627 - werkzeug - INFO - 127.0.0.1 - - [15/Dec/2024 14:59:19] "POST /api/login HTTP/1.1" 200 -
+2024-12-15 15:00:39,424 - werkzeug - INFO -  * Detected change in 'D:\\heart-attack-detection\\heart-attack-detection-be\\controllers\\admin\\account.py', reloading
+2024-12-15 15:00:39,583 - werkzeug - INFO -  * Restarting with stat
+2024-12-15 15:00:41,976 - werkzeug - WARNING -  * Debugger is active!
+2024-12-15 15:00:41,979 - werkzeug - INFO -  * Debugger PIN: 915-193-549
+2024-12-15 15:00:44,355 - werkzeug - INFO -  * Detected change in 'D:\\heart-attack-detection\\heart-attack-detection-be\\controllers\\admin\\account.py', reloading
+2024-12-15 15:00:44,497 - werkzeug - INFO -  * Restarting with stat
+2024-12-15 15:01:20,232 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2024-12-15 15:01:20,233 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2024-12-15 15:01:20,234 - werkzeug - INFO -  * Restarting with stat
+2024-12-15 15:01:22,392 - werkzeug - WARNING -  * Debugger is active!
+2024-12-15 15:01:22,395 - werkzeug - INFO -  * Debugger PIN: 915-193-549
+2024-12-15 15:01:33,264 - werkzeug - INFO - 127.0.0.1 - - [15/Dec/2024 15:01:33] "POST /api/login HTTP/1.1" 200 -
+2024-12-15 15:02:16,155 - werkzeug - INFO -  * Detected change in 'D:\\heart-attack-detection\\heart-attack-detection-be\\controllers\\admin\\account.py', reloading
+2024-12-15 15:02:16,330 - werkzeug - INFO -  * Restarting with stat
+2024-12-15 15:02:18,706 - werkzeug - WARNING -  * Debugger is active!
+2024-12-15 15:02:18,709 - werkzeug - INFO -  * Debugger PIN: 915-193-549
+2024-12-15 15:02:23,260 - werkzeug - INFO -  * Detected change in 'D:\\heart-attack-detection\\heart-attack-detection-be\\controllers\\admin\\account.py', reloading
+2024-12-15 15:02:23,443 - werkzeug - INFO -  * Restarting with stat
+2024-12-15 15:02:25,525 - werkzeug - WARNING -  * Debugger is active!
+2024-12-15 15:02:25,528 - werkzeug - INFO -  * Debugger PIN: 915-193-549
+2024-12-15 15:02:27,884 - werkzeug - INFO -  * Detected change in 'D:\\heart-attack-detection\\heart-attack-detection-be\\controllers\\admin\\account.py', reloading
+2024-12-15 15:02:28,024 - werkzeug - INFO -  * Restarting with stat
+2024-12-15 15:02:30,089 - werkzeug - WARNING -  * Debugger is active!
+2024-12-15 15:02:30,092 - werkzeug - INFO -  * Debugger PIN: 915-193-549
+2024-12-15 15:02:41,256 - werkzeug - INFO -  * Detected change in 'D:\\heart-attack-detection\\heart-attack-detection-be\\controllers\\admin\\account.py', reloading
+2024-12-15 15:02:41,407 - werkzeug - INFO -  * Restarting with stat
+2024-12-15 15:04:46,069 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2024-12-15 15:04:46,070 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2024-12-15 15:04:46,071 - werkzeug - INFO -  * Restarting with stat
+2024-12-15 15:04:48,255 - werkzeug - WARNING -  * Debugger is active!
+2024-12-15 15:04:48,258 - werkzeug - INFO -  * Debugger PIN: 915-193-549
+2024-12-15 15:04:52,299 - werkzeug - INFO - 127.0.0.1 - - [15/Dec/2024 15:04:52] "POST /api/login HTTP/1.1" 200 -
+2024-12-15 15:05:12,556 - werkzeug - INFO -  * Detected change in 'D:\\heart-attack-detection\\heart-attack-detection-be\\controllers\\admin\\account.py', reloading
+2024-12-15 15:05:12,733 - werkzeug - INFO -  * Restarting with stat

@@ -1,5 +1,5 @@
 from flask import request, jsonify, Blueprint
-from dbconfig.app import db
+from config.dbconfig.app import db
 from pymysql.cursors import DictCursor
 
 ## DOCTOR

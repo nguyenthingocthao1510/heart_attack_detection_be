@@ -38,6 +38,6 @@ def scheduled_diagnose():
 def receive_sensor_data_scheduled():
     return scheduled.receive_sensor_data()
 
-@diagnosis_route.route('/patient/scheduled/receive-user-data', methods=['POST'])
+@diagnosis_route.route('/patient/scheduled/receive-user-data', methods=['GET'])
 def receive_user_data_scheduled():
     return scheduled.receive_user_data()

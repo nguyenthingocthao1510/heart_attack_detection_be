@@ -1,4 +1,4 @@
-from dbconfig.app import db
+from config.dbconfig.app import db
 from flask import request, jsonify
 
 def get_all_permission_in_role_module(role_id, module_id):
