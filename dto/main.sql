@@ -125,6 +125,31 @@ CREATE TABLE diagnosis (
 
 )
 
+CREATE TABLE patient_record
+(
+  id INT PRIMARY KEY AUTO_INCREMENT,
+  doctor_id INT,
+  patient_id INT,
+  account_id INT,
+  age INT, 
+  trtbps INT,  
+  chol INT,  
+  thalachh INT,  
+  oldpeak INT, 
+  sex VARCHAR(255),  
+  exng VARCHAR(255),  
+  caa INT,  
+  cp VARCHAR(255),  
+  fbs INT,  
+  restecg INT, 
+  slp VARCHAR(255), 
+  thall VARCHAR(255),
+  create_date DATE,
+  FOREIGN KEY (patient_id) REFERENCES patient(id),
+  FOREIGN KEY (doctor_id) REFERENCES doctor(id),
+  FOREIGN KEY (account_id) REFERENCES account(id)
+)AUTO_INCREMENT = 1;
+
 -- INSERT VALUES SECTION --
 INSERT INTO `patient` (`id`, `name`) VALUES (6, 'Patient E');
 INSERT INTO `patient` (`id`, `name`) VALUES (5, 'Patient D');
