@@ -49,6 +49,9 @@ def login():
     user_token = validate_user(user_username, user_password)
 
     if user_token:
+        account_id = user_token['id']
+        redis_client.set(f"account_id:{account_id}", user_token['id'])
+
         cur = db.cursor()
         try: 
             cur.execute('UPDATE account SET account_status = %s WHERE id = %s', ('Active', user_token['id']))
@@ -58,13 +61,11 @@ def login():
         finally:
             cur.close()
 
-        account_id = user_token['id']
-        redis_client.setex("account_id", account_id)
         return jsonify({
             'message': 'Login successfully',
             'jwt_token': user_token['jwt_token'],  
             'roleId': user_token['role_id'],
-            'accountId': user_token['id']       
+            'accountId': user_token['id']
         })
     else:
         return Response(status=401) 
