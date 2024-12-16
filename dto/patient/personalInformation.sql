@@ -30,3 +30,11 @@ UPDATE patient SET dob = '2002-08-14' WHERE id = 4;
 UPDATE patient SET dob = '1976-05-25' WHERE id = 5;
 UPDATE patient SET dob = '1945-07-22' WHERE id = 6;
 
+ALTER TABLE patient ADD COLUMN need_prediction VARCHAR(5);
+UPDATE patient SET need_prediction = 'No' WHERE id = 3;
+UPDATE patient SET need_prediction = 'Yes' WHERE id = 4;
+UPDATE patient SET need_prediction = 'Yes' WHERE id = 5;
+UPDATE patient SET need_prediction = 'No' WHERE id = 6;
+
+SELECT id FROM patient WHERE need_prediction = 'Yes';
+

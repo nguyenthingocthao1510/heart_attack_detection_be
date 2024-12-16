@@ -1,9 +1,7 @@
 import time, schedule
 from config.dbconfig.app import db
-from flask import g
 from controllers.patient.Diagnosis.Prediction.basePredict import BasePredictor
 from controllers.patient.patientRecord.patientRecord import get_latest_record
-from middlewares.checkLogin import get_logged_in_user
 
 class ScheduledDiagnosis(BasePredictor):
     def __init__(self):
@@ -13,25 +11,59 @@ class ScheduledDiagnosis(BasePredictor):
             logger_name="ScheduledDiagnosis"
         )
 
-    def receive_sensor_data(self):
-        self.logger.info("Waiting sensor to retrieve data...")
+    def check_need_prediction(self):
         cur = db.cursor()
         try:
-            
-            cur.execute('SELECT * FROM sensor_data WHERE account_id = %s ORDER BY id DESC LIMIT 1', )
-            sensor_data = cur.fetchone()
-            if sensor_data:
-                res = {
-                    'thalachh': sensor_data[1],
-                    'resecg': sensor_data[2]
-                }
-                self.logger.debug(f"Raw user data received: {res}")
-                return {'data': res}, 200
+            cur.execute('''
+                        SELECT id FROM patient WHERE need_prediction = %s
+                        ''', 'Yes')
+            patients = cur.fetchall()
+            if patients:
+                result = [p[0] for p in patients]
+                self.logger.debug(f"Patients need prediction: {result}")
+                return result
             else:
-                return {'error':'Sensor data not found'}, 404
+                self.logger.error("Patients need prediction not found!")
+                return {"Patients need prediction not found!"}, 404
         except Exception as e:
             self.logger.error(f'Error: {str(e)}')
-            return
+            return {f'Error: {str(e)}'}, 500
+        finally:
+            cur.close()
+
+    def receive_sensor_data(self):
+        patient_id = self.check_need_prediction()
+        self.logger.debug(f'patient id: {patient_id}')
+        cur = db.cursor()
+        result = []
+        try:
+            for id in patient_id:
+                cur.execute('''
+                            SELECT sd.thalachh, sd.restecg
+                            FROM sensor_data sd 
+                            JOIN device d ON sd.device_id = d.id
+                            WHERE patient_id = %s 
+                            ORDER BY sd.id DESC 
+                            LIMIT 1
+                            ''', (id,))
+                sensor = cur.fetchone() 
+                if sensor:
+                    result.append({
+                        'patient_id': id,
+                        'thalachh': sensor[0],
+                        'restecg': sensor[1],
+                    })
+                else:
+                    self.logger.debug(f"No sensor data found for patient_id: {patient_id}")
+
+            if result:
+                self.logger.debug(f"Sensor data received: {result}")
+                return result, 200
+            else:
+                return {"error": "No sensor data found for any patients"}, 404
+        except Exception as e:
+            self.logger.error(f'Error: {str(e)}')
+            return {"error": str(e)}, 500
         finally:
             cur.close()
 
