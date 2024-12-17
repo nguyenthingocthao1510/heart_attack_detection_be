@@ -3,7 +3,8 @@ from copy import deepcopy
 import pandas as pd
 from abc import ABC, abstractmethod
 from utils.logger import Logger
-from controllers.patient.Diagnosis.Prediction.preprocess import DataPreprocessor
+from controllers.patient.diagnosis.prediction.preprocess import DataPreprocessor
+from controllers.patient.diagnosis.diagnosisHistory.diagnosisHistory import DiagnosisHistoryRepo
 
 class BasePredictor(ABC):
     def __init__(self, model_path, scaler_path, logger_name):
@@ -43,11 +44,12 @@ class BasePredictor(ABC):
         df[con_cols] = self.scaler.transform(df[con_cols])
 
         prediction = self.model.predict(df)
-
-        return {
+        result = {
             'prediction': int(prediction[0]),
             'thalachh': saved_data['thalachh'],
             'restecg': saved_data['restecg'],
-            'timestamp': time.strftime('%Y-%m-%d %H:%M:%S')
+            'timestamp': time.strftime('%Y-%m-%d %H:%M:%S')            
         }
+
+        return result
 

@@ -1,5 +1,8 @@
 from config.dbconfig.app import db
+from utils.logger import Logger
 import datetime
+
+logger = Logger('profile.py')
 
 class ProfileController:
     @staticmethod
@@ -33,5 +36,26 @@ class ProfileController:
                 return {'error':'Patient not found'}, 404
         except Exception as e:
             return (f'Error: {str(e)}')
+        finally:
+            cur.close()
+
+    @staticmethod
+    def check_need_prediction():
+        cur = db.cursor()
+        try:
+            cur.execute('''
+                        SELECT id FROM patient WHERE need_prediction = %s
+                        ''', 'Yes')
+            patients = cur.fetchall()
+            if patients:
+                result = [p[0] for p in patients]
+                logger.debug(f"Patients need prediction: {result}")
+                return result
+            else:
+                logger.error("Patients need prediction not found!")
+                return {"Patients need prediction not found!"}, 404
+        except Exception as e:
+            logger.error(f'Error: {str(e)}')
+            return {f'Error: {str(e)}'}, 500
         finally:
             cur.close()

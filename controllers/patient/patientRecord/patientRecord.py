@@ -1,6 +1,11 @@
 from flask import request, jsonify, Blueprint
 from config.dbconfig.app import db
 from pymysql.cursors import DictCursor
+from utils.logger import Logger
+from controllers.patient.profile import ProfileController
+
+logger = Logger('patientRecord.py')
+profile_controller = ProfileController()
 
 ## DOCTOR
 # GET ALL PATIENT FORM - DOCTOR
@@ -349,19 +354,45 @@ def get_records_history(account_id):
     finally:
         cursor.close()
 
-def get_record_by_patient_id(patient_id):
+def get_record_by_patient_id():
+    patient_id = profile_controller.check_need_prediction()
     cur = db.cursor()
+    result = []
     try:
-        cur.execute('''
-                    SELECT age, trtbps, chol, oldpeak, sex, exng, caa, cp, fbs, slp, thall
-                    FROM patient_record
-                    WHERE patient_id = %s
-                    ORDER BY id DESC
-                    LIMIT 1
-                    ''', patient_id)
-        result = cur.fetchone()
-        return result
+        for id in patient_id:
+            cur.execute('''
+                        SELECT age, trtbps, chol, oldpeak, sex, exng, caa, cp, fbs, slp, thall
+                        FROM patient_record
+                        WHERE patient_id = %s
+                        ORDER BY id DESC
+                        LIMIT 1
+                        ''', (id,))
+            record = cur.fetchone()
+            if record:
+                result.append({
+                    'patient_id': id,
+                    'age': record[0],
+                    'trtbps': record[1],
+                    'chol': record[2],
+                    'oldpeak': record[3],
+                    'sex': record[4],
+                    'exng': record[5],
+                    'caa': record[6],
+                    'cp': record[7],
+                    'fbs': record[8],
+                    'slp': record[9],
+                    'thall': record[10]
+                })
+            else:
+                logger.debug(f"No record found for patient_id: {patient_id}")
+
+        if result:
+            logger.debug(f"Patient record data received: {result}")
+            return result
+        else:
+            return {"error": "No record data found for any patients"}, 404
     except Exception as e:
-        return jsonify({"error": str(e)}), 500
+        logger.error(f'Error: {str(e)}')
+        return {"error": str(e)}, 500
     finally:
-        cur.close()    
+        cur.close()
