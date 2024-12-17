@@ -1,12 +1,12 @@
 import threading
 from flask import request, jsonify
-from controllers.patient.Diagnosis.Prediction.basePredict import BasePredictor
+from controllers.patient.diagnosis.prediction.basePredict import BasePredictor
 
 class ManualDiagnosis(BasePredictor):
     def __init__(self):
         super().__init__(
-            model_path=r'controllers/patient/Diagnosis/pickle/lr.pkl',
-            scaler_path=r'controllers/patient/Diagnosis/pickle/scaler.pkl',
+            model_path=r'controllers/patient/Diagnosis/Prediction/pickle/lr.pkl',
+            scaler_path=r'controllers/patient/Diagnosis/Prediction/pickle/scaler.pkl',
             logger_name="ManualDiagnosis"
         )
 
@@ -45,6 +45,10 @@ class ManualDiagnosis(BasePredictor):
         if self.temp_storage['sensor_input'] and self.temp_storage['user_input']:
             self.data_ready.set()
 
+    def combine_data(self, sensor_input, user_input):
+        combined_data = {**sensor_input, **user_input}
+        return combined_data
+
     def predict(self):
         self.data_ready.wait(timeout=10)
         
@@ -54,7 +58,8 @@ class ManualDiagnosis(BasePredictor):
 
         if not sensor_input or not user_input:
             return jsonify({'error': 'Timed out waiting for inputs. Please try again.'}), 408
-
-        result = self.predict(sensor_input, user_input)
+        
+        combined_data = self.combine_data(sensor_input, user_input)
+        result = super().predict(combined_data)
         return jsonify(result), 200
 

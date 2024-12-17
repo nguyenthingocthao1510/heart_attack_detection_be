@@ -1,10 +1,11 @@
 import pickle, time
 from copy import deepcopy
 import pandas as pd
+from abc import ABC, abstractmethod
 from utils.logger import Logger
 from controllers.patient.Diagnosis.Prediction.preprocess import DataPreprocessor
 
-class BasePredictor:
+class BasePredictor(ABC):
     def __init__(self, model_path, scaler_path, logger_name):
         with open(model_path, 'rb') as model_file:
             self.model = pickle.load(model_file)
@@ -21,11 +22,14 @@ class BasePredictor:
             'restecg_1', 'restecg_2', 'slp_1', 'slp_2',
             'thall_1', 'thall_2', 'thall_3'
         ]
+    
+    @abstractmethod
+    def combine_data(self):
+        pass
 
-    def predict(self, sensor_input, user_input):
+    def predict(self, combined_data):
         self.logger.info("Processing and predicting...")
 
-        combined_data = {**sensor_input, **user_input}
         saved_data = deepcopy(combined_data)
 
         combined_data = self.preprocessor.preprocess(combined_data)

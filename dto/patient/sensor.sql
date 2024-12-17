@@ -26,3 +26,10 @@ LEFT JOIN patient_record as pr
 ON p.id = pr.patient_id
 WHERE p.account_id = 21;
 
+SELECT sd.thalachh, sd.restecg
+FROM sensor_data sd 
+JOIN device d ON sd.device_id = d.id
+WHERE patient_id = 5
+ORDER BY sd.id DESC 
+LIMIT 1
+

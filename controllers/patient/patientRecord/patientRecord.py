@@ -348,3 +348,20 @@ def get_records_history(account_id):
 
     finally:
         cursor.close()
+
+def get_record_by_patient_id(patient_id):
+    cur = db.cursor()
+    try:
+        cur.execute('''
+                    SELECT age, trtbps, chol, oldpeak, sex, exng, caa, cp, fbs, slp, thall
+                    FROM patient_record
+                    WHERE patient_id = %s
+                    ORDER BY id DESC
+                    LIMIT 1
+                    ''', patient_id)
+        result = cur.fetchone()
+        return result
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+    finally:
+        cur.close()    
