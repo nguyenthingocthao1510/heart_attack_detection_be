@@ -5,13 +5,12 @@ class DiagnosisHistoryRepo(BaseRepository):
     def __init__(self):
         super().__init__(
             db_table = "diagnosis_history",
-            logger = "diagnosisHistory.py"
         )
 
     def add_by_patient_id(self, patient_id, thalachh, restecg, timestamp):
-
+        cur = self._get_cursor()
         try:
-            self.cur.execute(f'''
+            cur.execute(f'''
                              INSERT INTO {self.db_table}(patient_id, thalachh, restecg, diagnosis_time) 
                              VALUES (%s, %s, %s, %s)
                              ''', (patient_id, thalachh, restecg, timestamp))
@@ -23,4 +22,4 @@ class DiagnosisHistoryRepo(BaseRepository):
             self.logger.error(f'An error occurred: {e}')
             return e
         finally:
-            self.cur.close()
+            cur.close()

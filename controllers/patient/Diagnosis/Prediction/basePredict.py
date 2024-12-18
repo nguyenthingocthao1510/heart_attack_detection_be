@@ -4,17 +4,16 @@ import pandas as pd
 from abc import ABC, abstractmethod
 from utils.logger import Logger
 from controllers.patient.diagnosis.prediction.preprocess import DataPreprocessor
-from controllers.patient.diagnosis.diagnosisHistory.diagnosisHistory import DiagnosisHistoryRepo
 
 class BasePredictor(ABC):
-    def __init__(self, model_path, scaler_path, logger_name):
+    def __init__(self, model_path, scaler_path):
         with open(model_path, 'rb') as model_file:
             self.model = pickle.load(model_file)
         with open(scaler_path, 'rb') as scaler_file:
             self.scaler = pickle.load(scaler_file)
 
         self.preprocessor = DataPreprocessor()
-        self.logger = Logger(logger_name)
+        self.logger = Logger()
 
         self.model_cols = [
             'age', 'trtbps', 'chol', 'thalachh', 'oldpeak',

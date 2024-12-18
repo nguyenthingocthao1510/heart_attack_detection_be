@@ -7,7 +7,6 @@ class ManualDiagnosis(BasePredictor):
         super().__init__(
             model_path=r'controllers/patient/Diagnosis/Prediction/pickle/lr.pkl',
             scaler_path=r'controllers/patient/Diagnosis/Prediction/pickle/scaler.pkl',
-            logger_name="ManualDiagnosis"
         )
 
         self.temp_storage = {

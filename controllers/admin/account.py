@@ -1,7 +1,6 @@
 from flask import request, Response, jsonify
 from utils.utils import generate_salt,generate_hash,generate_jwt_token, db_write, db_read, validate_user
 from config.dbconfig.app import db
-from config.redisconfig.app import redis_client
 
 #REGISTER
 def register():
@@ -49,9 +48,6 @@ def login():
     user_token = validate_user(user_username, user_password)
 
     if user_token:
-        account_id = user_token['id']
-        redis_client.set(f"account_id:{account_id}", user_token['id'])
-
         cur = db.cursor()
         try: 
             cur.execute('UPDATE account SET account_status = %s WHERE id = %s', ('Active', user_token['id']))

@@ -10,7 +10,6 @@ class ScheduledDiagnosis(BasePredictor):
         super().__init__(
             model_path=r'controllers/patient/Diagnosis/Prediction/pickle/lr.pkl',
             scaler_path=r'controllers/patient/Diagnosis/Prediction/pickle/scaler.pkl',
-            logger_name="ScheduledDiagnosis"
         )
 
         self.diagnosis_history_repo = DiagnosisHistoryRepo()
@@ -48,7 +47,7 @@ class ScheduledDiagnosis(BasePredictor):
         self.logger.info("Starting scheduler after a brief delay...")
         time.sleep(5)
         self.logger.info("scheduler started...")
-        schedule.every(45).seconds.do(self.predict)
+        schedule.every(4).weeks.do(self.predict)
 
         while True:
             try:

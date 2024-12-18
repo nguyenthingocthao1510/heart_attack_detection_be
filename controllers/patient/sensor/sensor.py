@@ -1,21 +1,21 @@
 from controllers.baseRepository import BaseRepository
-from controllers.patient.profile import ProfileController
+from controllers.patient.profile import ProfileRepo
 
 class SensorRepo(BaseRepository):
     def __init__(self):
         super().__init__(
             db_table = 'sensor_data',
-            logger = 'sensor.py'
         )
 
-        self.profile_controller = ProfileController()
+        self.profile_repo = ProfileRepo()
 
     def receive_sensor_data(self):
-        patient_id = self.profile_controller.check_need_prediction()
+        patient_id = self.profile_repo.check_need_prediction()
+        cur = self._get_cursor()
         result = []
         try:
             for id in patient_id:
-                self.cur.execute('''
+                cur.execute('''
                                 SELECT sd.thalachh, sd.restecg
                                 FROM sensor_data sd 
                                 JOIN device d ON sd.device_id = d.id
@@ -23,7 +23,7 @@ class SensorRepo(BaseRepository):
                                 ORDER BY sd.id DESC 
                                 LIMIT 1
                                 ''', (id,))
-                sensor = self.cur.fetchone() 
+                sensor = cur.fetchone() 
                 if sensor:
                     result.append({
                         'patient_id': id,
@@ -42,4 +42,4 @@ class SensorRepo(BaseRepository):
             self.logger.error(f'Error: {str(e)}')
             return {"error": str(e)}, 500
         finally:
-            self.cur.close()
+            cur.close()

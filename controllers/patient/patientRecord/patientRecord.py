@@ -2,10 +2,10 @@ from flask import request, jsonify, Blueprint
 from config.dbconfig.app import db
 from pymysql.cursors import DictCursor
 from utils.logger import Logger
-from controllers.patient.profile import ProfileController
+from controllers.patient.profile import ProfileRepo
 
-logger = Logger('patientRecord.py')
-profile_controller = ProfileController()
+logger = Logger()
+profile_controller = ProfileRepo()
 
 ## DOCTOR
 # GET ALL PATIENT FORM - DOCTOR
