@@ -1,6 +1,7 @@
 import threading
 from flask import request, jsonify
 from controllers.patient.diagnosis.prediction.basePredict import BasePredictor
+from controllers.patient.diagnosis.diagnosisHistory.diagnosisHistory import DiagnosisHistoryRepo
 
 class ManualDiagnosis(BasePredictor):
     def __init__(self):
@@ -13,6 +14,8 @@ class ManualDiagnosis(BasePredictor):
             'sensor_input': None,
             'user_input': None
         }
+        
+        self.dh_repo = DiagnosisHistoryRepo()
         self.storage_lock = threading.Lock()
         self.data_ready = threading.Event()
 

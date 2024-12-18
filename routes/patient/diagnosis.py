@@ -3,6 +3,7 @@ from controllers.patient.diagnosis.prediction.manualPredict import ManualDiagnos
 from controllers.patient.diagnosis.prediction.scheduledPredict import ScheduledDiagnosis
 from controllers.patient.patientRecord.patientRecord import get_record_by_patient_id
 from controllers.patient.sensor.sensor import SensorRepo
+from controllers.patient.diagnosis.diagnosisHistory.diagnosisHistory import DiagnosisHistoryRepo
 
 diagnosis_route = Blueprint('diagnosis', __name__)
 app = Flask(__name__)
@@ -20,6 +21,7 @@ class DiagnosisFactory:
 manual = DiagnosisFactory.create_diagnosis('manual')
 scheduled = DiagnosisFactory.create_diagnosis('scheduled')
 sensor_repo = SensorRepo()
+dh_repo = DiagnosisHistoryRepo()
 
 @diagnosis_route.route('/patient/manual/diagnosis', methods=['POST'])
 def manual_diagnose():
@@ -44,3 +46,7 @@ def receive_sensor_data_scheduled():
 @diagnosis_route.route('/patient/scheduled/receive-user-data', methods=['GET'])
 def receive_user_data_scheduled():
     return get_record_by_patient_id()
+
+@diagnosis_route.route('/patient/add-diagnosis-history/patient_id=<int:patient_id>', methods=['POST'])
+def add_diagnosis_history(patient_id):
+    return dh_repo.add_by_patient_id(patient_id, where_clause=f'WHERE patient_id={patient_id}')

@@ -12,7 +12,7 @@ class ScheduledDiagnosis(BasePredictor):
             scaler_path=r'controllers/patient/Diagnosis/Prediction/pickle/scaler.pkl',
         )
 
-        self.diagnosis_history_repo = DiagnosisHistoryRepo()
+        self.dh_repo = DiagnosisHistoryRepo()
         self.sensor_repo = SensorRepo()
     
     def combine_data(self, sensor_input, user_input):
@@ -38,7 +38,7 @@ class ScheduledDiagnosis(BasePredictor):
             result = super().predict(cd)
             result_list.append(result)
 
-            self.diagnosis_history_repo.add_by_patient_id(cd['patient_id'], result['thalachh'], result['restecg'], result['timestamp'])
+            self.dh_repo.add_by_patient_id(cd['patient_id'], result['thalachh'], result['restecg'], result['timestamp'])
 
         self.logger.debug(f'Result list: {result_list}')
         return result_list
