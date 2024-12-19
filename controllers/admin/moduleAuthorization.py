@@ -1,4 +1,4 @@
-from dbconfig.app import db
+from config.dbconfig.app import db
 from flask import request, jsonify
 
 def get_module_in_role(role_id):

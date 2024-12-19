@@ -1,5 +1,5 @@
 from flask import Blueprint
-from controllers.admin.account import register, login, get_all, get_account_on_role, update_password
+from controllers.admin.account import register, login, get_all, get_account_on_role, update_password, get_active_user
 account_route = Blueprint('account',__name__)
 
 @account_route.route('/register', methods = ['POST'])
@@ -21,3 +21,7 @@ def get_all_account():
 @account_route.route('/account-role/accountId=<int:account_id>', methods = ['GET'])
 def get_role_by_account(account_id):
     return get_account_on_role(account_id)
+
+@account_route.route('/account/get-active-user', methods=['GET'])
+def get_active_user():
+    return get_active_user()

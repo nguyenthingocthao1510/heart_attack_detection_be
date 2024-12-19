@@ -1,5 +1,5 @@
 from flask import request, jsonify
-from dbconfig.app import db
+from config.dbconfig.app import db
 
 def get_all(account_id):
     cur = db.cursor()

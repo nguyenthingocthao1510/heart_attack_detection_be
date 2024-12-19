@@ -32,13 +32,14 @@ username VARCHAR(255),
 password VARCHAR(255),
 password_salt VARCHAR(255),
 password_hash VARCHAR(255),
+account_status VARCHAR(10)
 role_id INT,
 PRIMARY KEY (id),
 FOREIGN KEY (role_id) REFERENCES role(id)
 ) AUTO_INCREMENT = 1;
 
-
-
+ALTER TABLE account ADD COLUMN account_status VARCHAR(10);
+UPDATE account SET account_status = 'Inactive'
 
 
 

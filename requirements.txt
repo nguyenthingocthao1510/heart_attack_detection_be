@@ -7,5 +7,4 @@ python-dotenv
 pyjwt
 flask-cors
 gunicorn
-flask-wtf
-wtforms
+schedule

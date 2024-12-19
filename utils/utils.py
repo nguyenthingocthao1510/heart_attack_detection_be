@@ -1,6 +1,6 @@
 import os
 from hashlib import pbkdf2_hmac
-from dbconfig.app import db
+from config.dbconfig.app import db
 import jwt
 from dotenv import load_dotenv
 
@@ -65,6 +65,13 @@ def generate_jwt_token(content):
     encoded_content = jwt.encode(content, JWT_SECRET_KEY, algorithm="HS256")  # Use jwt.encode
     token = encoded_content  # The token is already a string in modern versions of PyJWT
     return token
+
+def decode_token(token):
+    JWT_SECRET_KEY = os.getenv("JWT_SECRET_KEY")
+    if not JWT_SECRET_KEY:
+        raise ValueError("JWT_SECRET_KEY is not set in the environment variables")
+    
+    return jwt.decode(token, JWT_SECRET_KEY, algorithms=['HS256'])
 
 def validate_user(username, password):
     # Lấy thông tin người dùng từ database
