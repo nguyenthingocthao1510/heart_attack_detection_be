@@ -38,7 +38,7 @@ class ScheduledDiagnosis(BasePredictor):
             result = super().predict(cd)
             result_list.append(result)
 
-            self.dh_repo.add_by_patient_id(cd['patient_id'], result['thalachh'], result['restecg'], result['timestamp'])
+            self.dh_repo.add_by_patient_id(cd['patient_id'], result['prediction'], result['thalachh'], result['restecg'], result['timestamp'])
 
         self.logger.debug(f'Result list: {result_list}')
         return result_list

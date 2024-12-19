@@ -9,3 +9,6 @@ CREATE TABLE diagnosis_history (
 ) AUTO_INCREMENT = 1;
 
 DROP TABLE diagnosis_history;
+
+ALTER TABLE diagnosis_history ADD COLUMN result INT;
+UPDATE diagnosis_history SET result = 0;

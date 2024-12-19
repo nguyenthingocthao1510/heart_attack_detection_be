@@ -10,6 +10,25 @@ class BaseRepository:
     def _get_cursor(self):
         return self.db.cursor()
     
+    def get_all(self, list: dict):
+        cur = self._get_cursor()
+        try:
+            cur.execute(f'SELECT * FROM f{self.db_table}')
+            datas = cur.fetchall()
+            result = []
+            for data in datas:
+                result.append(
+                    list
+                )
+            self.logger.info(f'Data fetch from f{self.db_table}: ')
+            return {"Successfully stored diagnosis history"}, 200
+        except Exception as e:
+            self.db.rollback()
+            self.logger.error(f'An error occurred: {e}')
+            return e
+        finally:
+            cur.close()
+    
     def add(self, columns: str, values: str, params: tuple, where_claus=''):
         cur = self._get_cursor()
         try:

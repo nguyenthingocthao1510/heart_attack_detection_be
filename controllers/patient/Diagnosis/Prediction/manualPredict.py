@@ -29,7 +29,8 @@ class ManualDiagnosis(BasePredictor):
                 self.temp_storage['sensor_input'] = data
                 self.check_data_ready()
 
-            return jsonify({'message': 'successfully received sensor data', 'data': data}), 200
+            return jsonify({'message': 'Successfully received sensor data', 'data': data}), 200
+
 
     def receive_user_data(self):
         if request.method == 'POST':
@@ -41,11 +42,14 @@ class ManualDiagnosis(BasePredictor):
                 self.temp_storage['user_input'] = data
                 self.check_data_ready()
 
-            return jsonify({'message': 'successfully received user data', 'data': data}), 200
+            return jsonify({'message': 'Successfully received user data', 'data': data}), 200
+
 
     def check_data_ready(self):
-        if self.temp_storage['sensor_input'] and self.temp_storage['user_input']:
+        self.logger.debug(f"Checking data readiness with temp_storage: {self.temp_storage}")
+        if self.temp_storage.get('sensor_input') and self.temp_storage.get('user_input'):
             self.data_ready.set()
+
 
     def combine_data(self, sensor_input, user_input):
         combined_data = {**sensor_input, **user_input}
@@ -53,15 +57,25 @@ class ManualDiagnosis(BasePredictor):
 
     def predict(self):
         self.data_ready.wait(timeout=10)
+        with self.storage_lock:
+            if not self.temp_storage['sensor_input'] or not self.temp_storage['user_input']:
+                self.logger.error('error: Missing sensor or user input data. Please provide both.')
+                return jsonify({'error': 'Missing sensor or user input data. Please provide both.'}), 400
         
         with self.storage_lock:
-            sensor_input = self.temp_storage.pop('sensor_input', None)
-            user_input = self.temp_storage.pop('user_input', None)
+            sensor_input = self.temp_storage.get('sensor_input')
+            user_input = self.temp_storage.get('user_input')
 
         if not sensor_input or not user_input:
             return jsonify({'error': 'Timed out waiting for inputs. Please try again.'}), 408
         
         combined_data = self.combine_data(sensor_input, user_input)
         result = super().predict(combined_data)
+        with self.storage_lock:
+            self.temp_storage['sensor_input'] = None
+            self.temp_storage['user_input'] = None
+
+        self.logger.debug(f'Result: {result}')
+
         return jsonify(result), 200
 

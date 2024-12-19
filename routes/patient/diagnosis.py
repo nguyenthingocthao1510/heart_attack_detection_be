@@ -47,6 +47,6 @@ def receive_sensor_data_scheduled():
 def receive_user_data_scheduled():
     return get_record_by_patient_id()
 
-@diagnosis_route.route('/patient/add-diagnosis-history/patient_id=<int:patient_id>', methods=['POST'])
+@diagnosis_route.route('/patient/add-diagnosis-history', methods=['POST'])
 def add_diagnosis_history(patient_id):
-    return dh_repo.add_by_patient_id(patient_id, where_clause=f'WHERE patient_id={patient_id}')
+    return dh_repo.save_diagnosis_history(patient_id)
