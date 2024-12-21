@@ -2,7 +2,7 @@ from flask import request, jsonify, Blueprint
 from config.dbconfig.app import db
 from pymysql.cursors import DictCursor
 from utils.logger import Logger
-from controllers.patient.profile import ProfileRepo
+from controllers.patient.profile.profile import ProfileRepo
 
 logger = Logger()
 profile_controller = ProfileRepo()

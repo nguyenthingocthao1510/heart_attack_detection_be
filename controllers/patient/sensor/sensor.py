@@ -1,5 +1,5 @@
 from controllers.baseRepository import BaseRepository
-from controllers.patient.profile import ProfileRepo
+from controllers.patient.profile.profile import ProfileRepo
 
 class SensorRepo(BaseRepository):
     def __init__(self):
