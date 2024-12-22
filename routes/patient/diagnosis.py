@@ -48,5 +48,5 @@ def receive_user_data_scheduled():
     return get_record_by_patient_id()
 
 @diagnosis_route.route('/patient/add-diagnosis-history', methods=['POST'])
-def add_diagnosis_history(patient_id):
-    return dh_repo.save_diagnosis_history(patient_id)
+def add_diagnosis_history():
+    return dh_repo.save_diagnosis_history()

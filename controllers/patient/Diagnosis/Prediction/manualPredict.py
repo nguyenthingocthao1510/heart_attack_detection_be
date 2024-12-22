@@ -59,6 +59,8 @@ class ManualDiagnosis(BasePredictor):
         self.data_ready.wait(timeout=10)
         with self.storage_lock:
             if not self.temp_storage['sensor_input'] or not self.temp_storage['user_input']:
+                self.temp_storage['sensor_input'] = None
+                self.temp_storage['user_input'] = None
                 self.logger.error('error: Missing sensor or user input data. Please provide both.')
                 return jsonify({'error': 'Missing sensor or user input data. Please provide both.'}), 400
         
