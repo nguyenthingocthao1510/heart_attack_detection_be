@@ -42,3 +42,17 @@ class DiagnosisHistoryRepo(BaseRepository):
                 return e
             finally:
                 cur.close()
+
+    def get_history(self, patient_id: int):
+        def fetch_history(data):
+            return {
+                'thalachh': data[2],
+                'restecg': data[3],
+                'diagnosis_time': data[4],
+                'result': data[5],
+            }
+        history = super().get_all(
+            where=f'patient_id = {patient_id}',
+            process_func=fetch_history
+        )
+        return history, 200
