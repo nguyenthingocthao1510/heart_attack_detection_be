@@ -55,4 +55,4 @@ class DiagnosisHistoryRepo(BaseRepository):
             where=f'patient_id = {patient_id}',
             process_func=fetch_history
         )
-        return history, 200
+        return jsonify({'history': history}), 200
