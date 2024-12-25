@@ -25,7 +25,6 @@ class ScheduledDiagnosis(BasePredictor):
                 merged = {**id, **lookup[pid]}
                 combined_data.append(merged)
 
-        self.logger.debug(f'Combined data: {combined_data}')
         return combined_data
 
     def predict(self):
@@ -40,20 +39,13 @@ class ScheduledDiagnosis(BasePredictor):
 
             self.dh_repo.add_by_patient_id(cd['patient_id'], result['prediction'], result['thalachh'], result['restecg'], result['timestamp'])
 
-        self.logger.debug(f'Result list: {result_list}')
         return result_list
     
     def run_scheduler(self):
-        self.logger.info("Starting scheduler after a brief delay...")
         time.sleep(5)
-        self.logger.info("scheduler started...")
         schedule.every(4).weeks.do(self.predict)
 
         while True:
-            try:
-                schedule.run_pending()
-                time.sleep(1)
-            except Exception as e:
-                self.logger.error(f"Scheduler encountered an error: {e}")
-                self.logger.info("Restarting scheduler...")
+            schedule.run_pending()
+            time.sleep(1)
 

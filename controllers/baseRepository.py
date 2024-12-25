@@ -20,11 +20,9 @@ class BaseRepository:
                 result.append(
                     list
                 )
-            self.logger.info(f'Data fetch from f{self.db_table}: ')
             return {"Successfully stored diagnosis history"}, 200
         except Exception as e:
             self.db.rollback()
-            self.logger.error(f'An error occurred: {e}')
             return e
         finally:
             cur.close()
@@ -38,11 +36,9 @@ class BaseRepository:
                             {where_claus}
                         ''', params)
             self.db.commit()
-            self.logger.info('"Successfully stored diagnosis history"')
             return {"Successfully stored diagnosis history"}, 200
         except Exception as e:
             self.db.rollback()
-            self.logger.error(f'An error occurred: {e}')
             return e
         finally:
             cur.close()

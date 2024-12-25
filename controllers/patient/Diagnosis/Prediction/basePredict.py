@@ -28,7 +28,6 @@ class BasePredictor(ABC):
         pass
 
     def predict(self, combined_data):
-        self.logger.info("Processing and predicting...")
 
         saved_data = deepcopy(combined_data)
 

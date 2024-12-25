@@ -21,9 +21,7 @@ class ManualDiagnosis(BasePredictor):
 
     def receive_sensor_data(self):
         if request.method == 'POST':
-            self.logger.info("Waiting sensor to retrieve data...")
             data = request.get_json()
-            self.logger.debug(f"Raw sensor data received: {data}")
 
             with self.storage_lock:
                 self.temp_storage['sensor_input'] = data
@@ -34,9 +32,7 @@ class ManualDiagnosis(BasePredictor):
 
     def receive_user_data(self):
         if request.method == 'POST':
-            self.logger.info("Waiting user data to retrieve...")
             data = request.get_json()
-            self.logger.debug(f"Raw user data received: {data}")
 
             with self.storage_lock:
                 self.temp_storage['user_input'] = data
@@ -46,7 +42,6 @@ class ManualDiagnosis(BasePredictor):
 
 
     def check_data_ready(self):
-        self.logger.debug(f"Checking data readiness with temp_storage: {self.temp_storage}")
         if self.temp_storage.get('sensor_input') and self.temp_storage.get('user_input'):
             self.data_ready.set()
 
@@ -59,7 +54,6 @@ class ManualDiagnosis(BasePredictor):
         self.data_ready.wait(timeout=10)
         with self.storage_lock:
             if not self.temp_storage['sensor_input'] or not self.temp_storage['user_input']:
-                self.logger.error('error: Missing sensor or user input data. Please provide both.')
                 return jsonify({'error': 'Missing sensor or user input data. Please provide both.'}), 400
         
         with self.storage_lock:
@@ -75,7 +69,6 @@ class ManualDiagnosis(BasePredictor):
             self.temp_storage['sensor_input'] = None
             self.temp_storage['user_input'] = None
 
-        self.logger.debug(f'Result: {result}')
 
         return jsonify(result), 200
 
