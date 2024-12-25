@@ -1,7 +1,7 @@
 import threading
 from flask import request, jsonify
-from controllers.patient.diagnosis.prediction.basePredict import BasePredictor
-from controllers.patient.diagnosis.diagnosisHistory.diagnosisHistory import DiagnosisHistoryRepo
+from controllers.patient.Diagnosis.Prediction.basePredict import BasePredictor
+from controllers.patient.Diagnosis.diagnosisHistory.diagnosisHistory import DiagnosisHistoryRepo
 
 class ManualDiagnosis(BasePredictor):
     def __init__(self):
