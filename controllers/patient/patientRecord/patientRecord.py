@@ -384,15 +384,13 @@ def get_record_by_patient_id():
                     'thall': record[10]
                 })
             else:
-                logger.debug(f"No record found for patient_id: {patient_id}")
+                f"No record found for patient_id: {patient_id}"
 
         if result:
-            logger.debug(f"Patient record data received: {result}")
             return result
         else:
             return {"error": "No record data found for any patients"}, 404
     except Exception as e:
-        logger.error(f'Error: {str(e)}')
         return {"error": str(e)}, 500
     finally:
         cur.close()
