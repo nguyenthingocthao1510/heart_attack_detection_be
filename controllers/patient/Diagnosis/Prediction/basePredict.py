@@ -3,7 +3,7 @@ from copy import deepcopy
 import pandas as pd
 from abc import ABC, abstractmethod
 from utils.logger import Logger
-from controllers.patient.diagnosis.prediction.preprocess import DataPreprocessor
+from controllers.patient.Diagnosis.Prediction.preprocess import DataPreprocessor
 
 class BasePredictor(ABC):
     def __init__(self, model_path, scaler_path):
