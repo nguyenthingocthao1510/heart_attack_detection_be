@@ -1,9 +1,9 @@
 from flask import Blueprint, Flask
-from controllers.patient.diagnosis.prediction.manualPredict import ManualDiagnosis
-from controllers.patient.diagnosis.prediction.scheduledPredict import ScheduledDiagnosis
+from controllers.patient.Diagnosis.Prediction.manualPredict import ManualDiagnosis
+from controllers.patient.Diagnosis.Prediction.scheduledPredict import ScheduledDiagnosis
 from controllers.patient.patientRecord.patientRecord import get_record_by_patient_id
 from controllers.patient.sensor.sensor import SensorRepo
-from controllers.patient.diagnosis.diagnosisHistory.diagnosisHistory import DiagnosisHistoryRepo
+from controllers.patient.Diagnosis.diagnosisHistory.diagnosisHistory import DiagnosisHistoryRepo
 
 diagnosis_route = Blueprint('diagnosis', __name__)
 app = Flask(__name__)

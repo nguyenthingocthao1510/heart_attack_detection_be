@@ -20,7 +20,7 @@ from controllers.patient.dashboard import generate_heartbeat, generate_temperatu
 from routes.patient.diagnosis import diagnosis_route
 from routes.patient.dashboard import dashboard_route
 from routes.category.Medicine.medicine import medicine_route
-from controllers.patient.diagnosis.prediction.scheduledPredict import ScheduledDiagnosis
+from controllers.patient.Diagnosis.Prediction.scheduledPredict import ScheduledDiagnosis
 from routes.patient.patientRecord.patientRecord import patient_record_route
 #CATEGORY
 from routes.category.Prescription.prescription import prescription_route
