@@ -31,15 +31,13 @@ class SensorRepo(BaseRepository):
                         'restecg': sensor[1],
                     })
                 else:
-                    self.logger.debug(f"No sensor data found for patient_id: {id}")
+                    f"No sensor data found for patient_id: {id}"
 
             if result:
-                self.logger.debug(f"Sensor data received: {result}")
                 return result
             else:
                 return {"error": "No sensor data found for any patients"}, 404
         except Exception as e:
-            self.logger.error(f'Error: {str(e)}')
             return {"error": str(e)}, 500
         finally:
             cur.close()

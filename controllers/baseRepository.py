@@ -40,7 +40,6 @@ class BaseRepository:
             return {"Successfully stored/added value!"}, 200
         except Exception as e:
             self.db.rollback()
-            self.logger.error(f'An error occurred: {e}')
             return e
         finally:
             cur.close()

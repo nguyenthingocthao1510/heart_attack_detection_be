@@ -3,7 +3,7 @@ import logging
 class Logger:
     def __init__(self):
         logging.basicConfig(
-            level=logging.DEBUG,
+            level=logging.CRITICAL,
             format='%(asctime)s - %(filename)s:%(lineno)s - %(funcName)s - %(levelname)s - %(message)s',
             handlers=[
                 logging.StreamHandler() 

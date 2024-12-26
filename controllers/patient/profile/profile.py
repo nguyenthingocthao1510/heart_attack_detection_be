@@ -54,10 +54,8 @@ class ProfileRepo(BaseRepository):
             patients = cur.fetchall()
             if patients:
                 result = [p[0] for p in patients]
-                logger.debug(f"Patients need prediction: {result}")
                 return result
             else:
-                logger.error("Patients need prediction not found!")
                 return {"Patients need prediction not found!"}, 404
         except Exception as e:
             logger.error(f'Error: {str(e)}')
@@ -73,11 +71,9 @@ class ProfileRepo(BaseRepository):
                            'id = %s', 
                            (data['need_prediction'], data['id']))
 
-            self.logger.debug(f'Update need_prediction to {data['need_prediction']} successfully!')
-            return f'Update need_prediction to {data['need_prediction']} successfully!', 200
+            return {f"Update need_prediction to {data['need_prediction']} successfully!"}, 200
         except Exception as e:
             self.db.rollback()
-            self.logger.error(f'An error occurred: {e}')
-            return f'An error occurred: {e}', 500
+            return {f"An error occurred: {e}"}, 500
         finally:
             cur.close()
