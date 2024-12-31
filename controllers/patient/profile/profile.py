@@ -58,7 +58,6 @@ class ProfileRepo(BaseRepository):
             else:
                 return {"Patients need prediction not found!"}, 404
         except Exception as e:
-            logger.error(f'Error: {str(e)}')
             return {f'Error: {str(e)}'}, 500
         finally:
             cur.close()
