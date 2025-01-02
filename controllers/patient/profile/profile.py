@@ -33,7 +33,8 @@ class ProfileRepo(BaseRepository):
                     'account_id': patient[2],
                     'gender': patient[3],
                     'dob': dob,
-                    'age': age
+                    'age': age,
+                    'need_prediction': patient[5]
                 }
                 
                 return {'data': res}, 200
@@ -57,7 +58,6 @@ class ProfileRepo(BaseRepository):
             else:
                 return {"Patients need prediction not found!"}, 404
         except Exception as e:
-            logger.error(f'Error: {str(e)}')
             return {f'Error: {str(e)}'}, 500
         finally:
             cur.close()
@@ -72,6 +72,7 @@ class ProfileRepo(BaseRepository):
 
             return {f"Update need_prediction to {data['need_prediction']} successfully!"}, 200
         except Exception as e:
+            self.db.rollback()
             return {f"An error occurred: {e}"}, 500
         finally:
             cur.close()
