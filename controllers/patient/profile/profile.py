@@ -34,7 +34,10 @@ class ProfileRepo(BaseRepository):
                     'gender': patient[3],
                     'dob': dob,
                     'age': age,
-                    'need_prediction': patient[5]
+                    'need_prediction': patient[5],
+                    'phone_number': patient[6],
+                    'email': patient[7],
+                    'address': patient[8]
                 }
                 
                 return {'data': res}, 200
