@@ -1,5 +1,5 @@
 from flask import Blueprint
-from controllers.category.Prescription.prescription import get_all, get_by_id, create_prescription, update_prescription_detail, delete
+from controllers.category.Prescription.prescription import get_all, get_by_id, create_prescription, update_prescription_detail, delete, patient_get_all, get_all_doctor, get_all_medicine
 prescription_route = Blueprint('prescription_route', __name__)
 
 @prescription_route.route('/prescriptions/accountId=<int:account_id>' , methods = ['GET'])
@@ -22,3 +22,14 @@ def update_prescription(prescription_id):
 def delete_prescription_detail(id):
     return delete(id)
 
+@prescription_route.route('/prescriptions/patientId=<int:patient_id>' , methods = ['GET'])
+def patient_get_all_prescription(patient_id):
+    return patient_get_all(patient_id)
+
+@prescription_route.route('/prescription/doctors' , methods = ['GET'])
+def get_all_doctor_in_prescription():
+    return get_all_doctor()
+
+@prescription_route.route('/prescription/medicines' , methods = ['GET'])
+def get_all_medicine_in_prescription():
+    return get_all_medicine()

@@ -194,3 +194,77 @@ def delete(id):
         except Exception as e:
             db.rollback()  
             return {'error': str(e)}, 500
+
+def patient_get_all(patient_id):
+    cur = db.cursor()
+    try:
+        cur.execute('''
+SELECT p.id as prescription_id,
+       p.patient_id,
+       p.prescription_date,
+       p.doctor_id,
+       p.note,
+       pd.medicine_id,
+       pd.medicine_amount,
+       pd.usage_instructions
+FROM prescription p 
+JOIN prescription_details pd 
+ON p.id = pd.prescription_id
+WHERE p.patient_id = %s
+''', (patient_id,))
+        prescriptions = cur.fetchall()
+        result = []
+        for p in prescriptions:
+            result.append({
+                'prescription_id': p[0],
+                'patient_id': p[1],
+                'prescription_date': p[2],
+                'doctor_id': p[3],
+                'note': p[4],
+                'medicine_id': p[5],
+                'medicine_amount': p[6],
+                'usage_instructions': p[7],
+            })
+        return jsonify({'data': result}), 200
+    except Exception as e:
+        print(f'Error: {str(e)}')
+        return jsonify({'error': str(e)}), 500
+    finally:
+        cur.close()
+
+def get_all_doctor():
+    cur = db.cursor()
+    result = []
+    try:
+        cur.execute('SELECT id, name FROM doctor')
+        doctors = cur.fetchall()
+        for d in doctors:
+            result.append({
+                'id': d[0],
+                'name': d[1]
+            })
+        return jsonify({'data': result}), 200
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+    finally:
+        cur.close()
+
+def get_all_medicine():
+    cur = db.cursor()
+    result = []
+    try:
+        cur.execute('SELECT id, name FROM medicine')
+        doctors = cur.fetchall()
+        for d in doctors:
+            result.append({
+                'id': d[0],
+                'name': d[1]
+            })
+        return jsonify({'data': result}), 200
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+    finally:
+        cur.close()
+
+
+
