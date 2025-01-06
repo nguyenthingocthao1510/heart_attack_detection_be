@@ -23,6 +23,7 @@ from routes.patient.dashboard import dashboard_route
 from routes.category.Medicine.medicine import medicine_route
 from controllers.patient.Diagnosis.Prediction.scheduledPredict import ScheduledDiagnosis
 from routes.patient.patientRecord.patientRecord import patient_record_route
+from routes.patient.healthInsurance.healthInsurance import health_insurance_route
 #CATEGORY
 from routes.category.Prescription.prescription import prescription_route
 from routes.category.Doctor.doctor import doctor_route
@@ -70,6 +71,8 @@ def create_app():
     app.register_blueprint(medicine_route, url_prefix = url_prefix)
     app.register_blueprint(doctor_route, url_prefix = url_prefix)
     app.register_blueprint(patient_record_route, url_prefix = url_prefix)
+    app.register_blueprint(health_insurance_route, url_prefix=url_prefix)
+    
     ############################################################
     ############################################################
     return app
