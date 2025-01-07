@@ -11,10 +11,10 @@ class BaseRepository:
     def _get_cursor(self):
         return self.db.cursor()
 
-    def get_all(self, select, where='', process_func=None):
+    def get_all(self, select_clause, from_clause, where_clause='', process_func=None):
         cur = self._get_cursor()
         try:
-            cur.execute(f'SELECT {select} FROM {self.db_table} WHERE {where}')
+            cur.execute(f'SELECT {select_clause} FROM {from_clause} WHERE {where_clause}')
             datas = cur.fetchall()
             if process_func:
                 return [process_func(data) for data in datas]
@@ -43,7 +43,14 @@ class BaseRepository:
 
     def update(self, set: str, where: str, params: tuple):
         cur = self._get_cursor()
-        cur.execute(f'UPDATE {self.db_table} SET {set} WHERE {where}', params)
-        self.db.commit()
+        try:
+            cur.execute(f'UPDATE {self.db_table} SET {set} WHERE {where}', params)
+            self.db.commit()
+            return {"Successfully update value!"}, 200
+        except Exception as e:
+            self.db.rollback()
+            return e
+        finally:
+            cur.close()
 
     

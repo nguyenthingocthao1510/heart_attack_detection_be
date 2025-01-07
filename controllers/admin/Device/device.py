@@ -80,3 +80,14 @@ class DeviceRepo(BaseRepository):
         finally:
             cur.close()
     
+    def device_assignment(device_id):
+        """
+        Can be used for both assign and unassign
+        """
+        data = request.get_json()
+        super().update(
+            "patient_id = %s",
+            "device_id = %s",
+            (data["patient_id"], device_id)
+        )
+    
