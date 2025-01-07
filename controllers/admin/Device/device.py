@@ -48,3 +48,34 @@ class DeviceRepo(BaseRepository):
             return f"An error occurred: {e}", 500
         finally:
             cur.close()
+
+    def get_unassigned_patients(self):
+        cur = self._get_cursor()
+        try:
+            cur.execute('''
+                        SELECT * 
+                        FROM patient 
+                        WHERE id NOT IN (
+                            SELECT patient_id 
+                            FROM device 
+                            WHERE patient_id IS NOT NULL
+                        )
+                        ''')
+            patients = cur.fetchall()
+            result = []
+            for patient in patients:
+                result.append({
+                    'patient_id': patient[0],
+                    'patient_name': patient[1]
+                })
+            if result:
+                return jsonify({
+                    'unassigned_patient': result
+                }), 200
+            else:
+                return jsonify({'No patients found'}), 404
+        except Exception as e:
+            return jsonify({f'An error occurred: {e}'}), 500
+        finally:
+            cur.close()
+    
