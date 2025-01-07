@@ -67,7 +67,7 @@ class DeviceRepo(BaseRepository):
                 result.append({
                     'patient_id': patient[0],
                     'patient_name': patient[1],
-                    'selected': True
+                    'selected': False
                 })
             if result:
                 return jsonify({
