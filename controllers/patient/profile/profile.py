@@ -67,15 +67,9 @@ class ProfileRepo(BaseRepository):
 
     def update_need_prediction(self):
         data = request.get_json()
-        cur = self._get_cursor()
-        try:
-            super().update('need_prediction = %s', 
-                           'id = %s', 
-                           (data['need_prediction'], data['id']))
-
-            return {f"Update need_prediction to {data['need_prediction']} successfully!"}, 200
-        except Exception as e:
-            self.db.rollback()
-            return {f"An error occurred: {e}"}, 500
-        finally:
-            cur.close()
+        return super().update(
+            'need_prediction = %s',
+           'id = %s',
+           (data['need_prediction'], data['id']),
+            {"message": f"Update need_prediction to {data['need_prediction']} successfully!"}
+        )

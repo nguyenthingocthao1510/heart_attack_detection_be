@@ -1,5 +1,5 @@
 from config.dbconfig.app import db
-from flask import request
+from flask import request, jsonify
 from utils.logger import Logger
 
 class BaseRepository:
@@ -41,15 +41,15 @@ class BaseRepository:
         finally:
             cur.close()
 
-    def update(self, set: str, where: str, params: tuple):
+    def update(self, set_clause: str, where_clause: str, params: tuple, response: dict):
         cur = self._get_cursor()
         try:
-            cur.execute(f'UPDATE {self.db_table} SET {set} WHERE {where}', params)
+            cur.execute(f'UPDATE {self.db_table} SET {set_clause} WHERE {where_clause}', params)
             self.db.commit()
-            return {"Successfully update value!"}, 200
+            return jsonify(response), 200
         except Exception as e:
             self.db.rollback()
-            return e
+            return jsonify({f"An error occurred: {e}"}), 500
         finally:
             cur.close()
 
