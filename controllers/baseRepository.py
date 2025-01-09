@@ -1,5 +1,5 @@
 from config.dbconfig.app import db
-from flask import request
+from flask import request, jsonify
 from utils.logger import Logger
 
 class BaseRepository:
@@ -11,10 +11,10 @@ class BaseRepository:
     def _get_cursor(self):
         return self.db.cursor()
 
-    def get_all(self, select, where='', process_func=None):
+    def get_all(self, select_clause, from_clause, where_clause='', process_func=None):
         cur = self._get_cursor()
         try:
-            cur.execute(f'SELECT {select} FROM {self.db_table} WHERE {where}')
+            cur.execute(f'SELECT {select_clause} FROM {from_clause} WHERE {where_clause}')
             datas = cur.fetchall()
             if process_func:
                 return [process_func(data) for data in datas]
@@ -41,9 +41,16 @@ class BaseRepository:
         finally:
             cur.close()
 
-    def update(self, set: str, where: str, params: tuple):
+    def update(self, set_clause: str, where_clause: str, params: tuple, response: dict):
         cur = self._get_cursor()
-        cur.execute(f'UPDATE {self.db_table} SET {set} WHERE {where}', params)
-        self.db.commit()
+        try:
+            cur.execute(f'UPDATE {self.db_table} SET {set_clause} WHERE {where_clause}', params)
+            self.db.commit()
+            return jsonify(response), 200
+        except Exception as e:
+            self.db.rollback()
+            return jsonify({f"An error occurred: {e}"}), 500
+        finally:
+            cur.close()
 
     

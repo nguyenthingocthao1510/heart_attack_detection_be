@@ -66,7 +66,8 @@ class DeviceRepo(BaseRepository):
             for patient in patients:
                 result.append({
                     'patient_id': patient[0],
-                    'patient_name': patient[1]
+                    'patient_name': patient[1],
+                    'selected': False
                 })
             if result:
                 return jsonify({
@@ -79,3 +80,14 @@ class DeviceRepo(BaseRepository):
         finally:
             cur.close()
     
+    def update_device_assignment(self, device_id):
+        """
+        Can be used for both assign and unassign
+        """
+        data = request.get_json()
+        return super().update(
+            "patient_id = %s",
+            "id = %s",
+            (data["patient_id"], device_id),
+            {"message": "Successfully update patient id in device table!"}
+        )
