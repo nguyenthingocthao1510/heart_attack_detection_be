@@ -33,10 +33,11 @@ class DiagnosisHistoryRepo(BaseRepository):
                                 VALUES (%s, %s, %s, %s, %s)
                             ''', (data['patient_id'], data['prediction'], data['thalachh'], data['restecg'], data['timestamp']))
                 self.db.commit()
-                return data, 200
+                return jsonify(data), 200
             except Exception as e:
                 self.db.rollback()
-                return e
+                self.logger.critical(f"An error occurred: {e}")
+                return jsonify({"An error occurred": "e"}), 500
             finally:
                 cur.close()
     
