@@ -7,6 +7,8 @@ CREATE TABLE sensor_data (
 	FOREIGN KEY (device_id) REFERENCES device(id)
 ) AUTO_INCREMENT = 1;
 
+ALTER TABLE sensor_data ADD avg_bpm DOUBLE;
+
 INSERT INTO sensor_data
 VALUES (1, 120, 510);
 INSERT INTO sensor_data
