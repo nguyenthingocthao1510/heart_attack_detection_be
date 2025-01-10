@@ -13,6 +13,7 @@ from routes.admin.device import device_route
 from routes.admin.moduleAuthorization import module_role_route
 import threading
 from controllers.patient.dashboard import generate_heartbeat, generate_temperature
+from routes.admin.dashboard import admin_dashboard_route
 
 # DOCTOR
 # from routes.doctor.patient import patient_route
@@ -46,6 +47,8 @@ def create_app():
     # app.register_blueprint(role_route, url_prefix = url_prefix)
     # app.register_blueprint(permission_route, url_prefix = url_prefix)
     app.register_blueprint(module_role_route, url_prefix=url_prefix)
+    app.register_blueprint(admin_dashboard_route, url_prefix=url_prefix)
+    
     ############################################################
     ############################################################
 
