@@ -12,7 +12,7 @@ from routes.admin.device import device_route
 # from routes.admin.permission import permission_route
 from routes.admin.moduleAuthorization import module_role_route
 import threading
-from controllers.patient.dashboard import generate_heartbeat, generate_temperature
+from routes.patient.dashboard import dashboard_route
 from routes.admin.dashboard import admin_dashboard_route
 
 # DOCTOR
@@ -25,6 +25,7 @@ from routes.category.Medicine.medicine import medicine_route
 from controllers.patient.Diagnosis.Prediction.scheduledPredict import ScheduledDiagnosis
 from routes.patient.patientRecord.patientRecord import patient_record_route
 from routes.patient.healthInsurance.healthInsurance import health_insurance_route
+from controllers.patient.dashboard import start_auto_post_data
 #CATEGORY
 from routes.category.Prescription.prescription import prescription_route
 from routes.category.Doctor.doctor import doctor_route
@@ -48,7 +49,6 @@ def create_app():
     # app.register_blueprint(permission_route, url_prefix = url_prefix)
     app.register_blueprint(module_role_route, url_prefix=url_prefix)
     app.register_blueprint(admin_dashboard_route, url_prefix=url_prefix)
-    
     ############################################################
     ############################################################
 
@@ -59,9 +59,6 @@ def create_app():
     app.register_blueprint(patient_profile_route, url_prefix=url_prefix)
     diagnosis_service = ScheduledDiagnosis()
     threading.Thread(target=diagnosis_service.run_scheduler, daemon=True).start()
-
-    threading.Thread(target=generate_heartbeat, daemon=True).start()
-    threading.Thread(target=generate_temperature, daemon=True).start()
     app.register_blueprint(dashboard_route, url_prefix= url_prefix)
     ############################################################
     ############################################################
@@ -78,4 +75,5 @@ def create_app():
     
     ############################################################
     ############################################################
+
     return app

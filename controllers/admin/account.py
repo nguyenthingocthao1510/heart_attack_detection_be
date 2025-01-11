@@ -7,12 +7,13 @@ def register():
     user_username = request.json['username']
     user_password = request.json['password']
     user_role = request.json['role_id']
+    user_status = 'Active'
 
     password_salt = generate_salt()
     password_hash = generate_hash(user_password, password_salt)
 
     try:
-        if db_write('''INSERT INTO account(username, password_salt, password_hash, role_id) VALUES (%s,%s,%s,%s)''', (user_username,password_salt, password_hash ,user_role)):
+        if db_write('''INSERT INTO account(username, password_salt, password_hash, role_id, account_status) VALUES (%s,%s,%s,%s,%s)''', (user_username,password_salt, password_hash ,user_role, user_status)):
             return Response(status=200)
     except Exception as e:
         print('Error: ', str(e))
@@ -26,13 +27,14 @@ def update_password(account_id):
 
         password_salt = generate_salt()
         password_hash = generate_hash(user_password, password_salt)
+        account_status = request.json.get('account_status')
 
         query = '''
         UPDATE account 
-        SET password_salt = %s, password_hash = %s 
+        SET password_salt = %s, password_hash = %s , account_status = %s
         WHERE id = %s
         '''
-        if db_write(query, (password_salt, password_hash, account_id)):
+        if db_write(query, (password_salt, password_hash, account_status, account_id)):
             return {"message": "Password updated successfully"}, 200
         else:
             return {"message": "Failed to update password"}, 500
@@ -104,6 +106,7 @@ def get_all():
             result.append({
                 'id': a[0],
                 'username': a[1],
+                'account_status': a[6],
             })
         return jsonify({'data': result})
     except Exception as e:
