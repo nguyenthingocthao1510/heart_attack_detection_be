@@ -34,7 +34,43 @@ def get_all(account_id):
     finally:
         cur.close()
 
+def get_for_list():
+    if request.method == 'POST':
+        cursor = db.cursor()
+        data = request.json
+        patient_name = data.get('patient_name')
+        account_id = data.get('account_id')
+        
+        try:
+            cursor.execute("""SELECT DISTINCT
+                    p.id AS prescription_id,
+                    d.name AS doctor_name,
+                    pa.name AS patient_name,
+                    p.prescription_date,
+                    d.id as doctor_id
+                    FROM prescription p
+                    JOIN patient pa ON p.patient_id = pa.id
+                    JOIN doctor d ON p.doctor_id = d.id
+                    WHERE d.account_id = % s AND pa.name LIKE %s""",((account_id, f"%{patient_name}%",)))
+            prescriptions = cursor.fetchall()
 
+            result = []
+            for p in prescriptions:
+                 result.append({
+                'prescription_id': p[0],        
+                'doctor_name': p[1],
+                'patient_name': p[2],
+                'prescription_date': p[3],
+                'doctor_id': p[4]
+            })
+            return jsonify({'data': result})
+
+        except Exception as e:
+            print(f"Error occurred: {str(e)}")
+            return jsonify({'error': str(e)}), 500
+
+        finally:
+            cursor.close()
 
 def get_by_id(account_id, prescription_id):
     cur = db.cursor()

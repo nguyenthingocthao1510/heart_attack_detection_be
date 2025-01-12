@@ -1,11 +1,15 @@
 from flask import Blueprint
-from controllers.admin.module import get_all, get_by_id, add, update, delete
+from controllers.admin.module import get_all, get_by_id, add, update, delete, get_for_list
 
 module_route = Blueprint('module', __name__)
 
 @module_route.route('/modules', methods = ['GET'])
 def get_all_module():
     return get_all()
+
+@module_route.route('/list-module', methods = ['POST'])
+def get_all_for_list():
+    return get_for_list()
 
 @module_route.route('/module/id=<int:id>', methods = ['GET'])
 def get_module_by_id(id):

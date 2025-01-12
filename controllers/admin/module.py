@@ -1,7 +1,7 @@
 from flask import request, jsonify
 from config.dbconfig.app import db
 
-#GET ALL 
+# GET ALL 
 def get_all():
     cur = db.cursor()
     try:
@@ -21,6 +21,34 @@ def get_all():
             return jsonify({'error': str(e)}), 500
     finally:
             cur.close()
+
+def get_for_list():
+    if request.method == 'POST':
+        cursor = db.cursor()
+        data = request.json
+        name = data.get('name')
+
+        try:
+            cursor.execute("SELECT * FROM module WHERE name LIKE %s", (f"%{name}%",))
+            modules = cursor.fetchall()
+
+            result = []
+            for m in modules:
+                result.append({
+                    'id': m[0],
+                    'name': m[1],
+                    'route': m[2],
+                    'image': m[3],
+                })
+
+            return jsonify({'data': result})
+
+        except Exception as e:
+            print(f"Error occurred: {str(e)}")
+            return jsonify({'error': str(e)}), 500
+
+        finally:
+            cursor.close()
 
 #GET BY ID
 def get_by_id(id):

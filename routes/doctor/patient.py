@@ -1,5 +1,5 @@
 from flask import Blueprint
-from controllers.doctor.patient import get_all, get_by_id, add, update, delete
+from controllers.doctor.patient import get_all, get_by_id, add, update, delete, get_for_list
 
 patient_route = Blueprint('patient', __name__)
 
@@ -10,6 +10,10 @@ def get_all_patient():
 @patient_route.route('/doctor/patient/id=<int:id>', methods=['GET'])
 def get_patient_by_id(id):
     return get_by_id(id)
+
+@patient_route.route('/doctor/list-patients', methods = ['POST'])
+def filter_patients():
+    return get_for_list()
 
 @patient_route.route('/doctor/add', methods = ['POST'])
 def add_patient():

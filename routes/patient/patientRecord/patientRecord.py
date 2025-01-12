@@ -1,5 +1,5 @@
 from flask import Blueprint
-from controllers.patient.patientRecord.patientRecord import get_records_history, get_all_patient_form, get_history_patient_record, get_latest_record, insert, update, get_patient_record
+from controllers.patient.patientRecord.patientRecord import get_records_history, get_all_patient_form, get_history_patient_record, get_latest_record, insert, update, get_patient_record, get_for_list
 
 patient_record_route = Blueprint('patient_record_route', __name__)
 
@@ -15,6 +15,10 @@ def get_history_patient_record_form(account_id,patient_id):
 @patient_record_route.route('/patient-record/id=<int:id>', methods=['GET'])
 def get_doctor_patient_record(id):
     return get_patient_record(id)
+
+@patient_record_route.route('/patient-record/list-patient-records', methods=['POST'])
+def filter_patient_record():
+    return get_for_list()
 
 @patient_record_route.route('/patient-records/add', methods=['POST'])
 def create_new_patient_record():
