@@ -114,6 +114,33 @@ def get_all():
     finally:
         cur.close()
 
+def get_for_list():
+    if request.method == 'POST':
+        cursor = db.cursor()
+        data = request.json
+        username = data.get('username')
+
+        try:
+            cursor.execute("SELECT * FROM account WHERE username LIKE %s", (f"%{username}%",))
+            accounts = cursor.fetchall()
+
+            result = []
+            for a in accounts:
+                result.append({
+                    'id': a[0],
+                    'username': a[1],
+                    'account_status': a[6],
+                })
+
+            return jsonify({'data': result})
+
+        except Exception as e:
+            print(f"Error occurred: {str(e)}")
+            return jsonify({'error': str(e)}), 500
+
+        finally:
+            cursor.close()
+
 def get_account_on_role(account_id):
     cur = db.cursor()
     try:

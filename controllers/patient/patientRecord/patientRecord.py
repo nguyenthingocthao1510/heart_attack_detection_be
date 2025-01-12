@@ -150,6 +150,71 @@ def get_patient_record(id):
     finally:
         cursor.close()
 
+def get_for_list():
+    cursor = db.cursor(DictCursor)
+    data = request.json
+    patient_name = data.get('patient_name')
+    account_id = data.get('account_id')
+
+    try:
+        # Xác định vai trò user
+        cursor.execute(
+            '''
+            SELECT 
+                COALESCE(d.id, p.id) AS user_id,
+                CASE 
+                    WHEN d.id IS NOT NULL THEN 'doctor'
+                    WHEN p.id IS NOT NULL THEN 'patient'
+                END AS role
+            FROM account a
+            LEFT JOIN doctor d ON d.account_id = a.id
+            LEFT JOIN patient p ON p.account_id = a.id
+            WHERE a.id = %s
+            ''', (account_id,)
+        )
+        print(f'account_id: {account_id}')
+        result = cursor.fetchone()
+
+        print(f'result: {result}')
+
+        if not result:
+            return jsonify({'error': 'Account not found'}), 400
+        
+        user_id, role = result['user_id'], result['role']
+
+        if role == 'doctor':
+            # Truy vấn danh sách hồ sơ bệnh án mới nhất, áp dụng điều kiện patient_name
+            query = '''
+                SELECT p.*, pr.doctor_id AS doctor_id, pr.id as patient_record_id
+                FROM patient_record pr
+                JOIN (
+                    SELECT patient_id, MAX(id) AS last_id
+                    FROM patient_record
+                    WHERE doctor_id = %s
+                    GROUP BY patient_id
+                ) latest_records ON pr.id = latest_records.last_id 
+                JOIN patient p ON p.id = pr.patient_id
+                WHERE p.name LIKE %s
+                ORDER BY pr.id DESC
+            '''
+            search_name = f"%{patient_name}%" if patient_name else "%"
+            cursor.execute(query, (user_id, search_name))
+
+            patient_record = cursor.fetchall()
+
+            return jsonify({
+                'data': patient_record
+            }), 200
+
+        else:
+            return jsonify({'error': 'Invalid role'}), 400
+
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+    
+    finally:
+        cursor.close()
+
 # INSERT A NEW PATIENT RECORD
 def insert():
     if request.method == 'POST':

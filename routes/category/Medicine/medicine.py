@@ -1,11 +1,15 @@
 from flask import Blueprint
-from controllers.category.Medicine.medicine import get_all, get_by_id, add, update, delete
+from controllers.category.Medicine.medicine import get_all, get_by_id, add, update, delete, get_for_list
 
 medicine_route = Blueprint('medicine_route',__name__)
 
 @medicine_route.route('/medicines', methods = ['GET'])
 def get_all_medicine():
     return get_all()
+
+@medicine_route.route('/medicine/list-medicines', methods = ['POST'])
+def filter_medicine():
+    return get_for_list()
 
 @medicine_route.route('/medicine/id=<int:id>', methods = ['GET'])
 def get_medicine_by_id(id):

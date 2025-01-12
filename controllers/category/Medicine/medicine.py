@@ -42,6 +42,34 @@ def get_by_id(id):
     finally:
         cur.close()
 
+def get_for_list():
+    if request.method == 'POST':
+        cursor = db.cursor()
+        data = request.json
+        name = data.get('name')
+
+        try:
+            cursor.execute("SELECT * FROM medicine WHERE name LIKE %s", (f"%{name}%",))
+            medicines = cursor.fetchall()
+
+            result = []
+            for m in medicines:
+                result.append({
+                    'id': m[0],
+                    'name': m[1],
+                    'uses': m[2],
+                    'description': m[3],
+                })
+
+            return jsonify({'data': result})
+
+        except Exception as e:
+            print(f"Error occurred: {str(e)}")
+            return jsonify({'error': str(e)}), 500
+
+        finally:
+            cursor.close()       
+
 def add():
     if request.method == 'POST':
         cur = db.cursor()

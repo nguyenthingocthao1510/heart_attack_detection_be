@@ -1,5 +1,5 @@
 from config.dbconfig.app import db
-from flask import request
+from flask import request, jsonify
 
 #GET ALL
 def get_all():
@@ -18,6 +18,32 @@ def get_all():
             return (f'Error: {str(e)}')
     finally:
             cur.close()
+
+def get_for_list():
+    if request.method == 'POST':
+        cursor = db.cursor()
+        data = request.json
+        name = data.get('name')
+
+        try:
+            cursor.execute("SELECT * FROM patient WHERE name LIKE %s", (f"%{name}%",))
+            patients = cursor.fetchall()
+
+            result = []
+            for p in patients:
+                result.append({
+                    'id': p[0],
+                    'name': p[1]
+                })
+
+            return jsonify({'data': result})
+
+        except Exception as e:
+            print(f"Error occurred: {str(e)}")
+            return jsonify({'error': str(e)}), 500
+
+        finally:
+            cursor.close()
 
 #GET BY ID
 def get_by_id(id):
