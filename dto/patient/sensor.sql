@@ -8,6 +8,9 @@ CREATE TABLE sensor_data (
 ) AUTO_INCREMENT = 1;
 
 ALTER TABLE sensor_data ADD avg_bpm DOUBLE;
+ALTER TABLE sensor_data ADD timestamp TIMESTAMP;
+
+DELETE FROM sensor_data;
 
 INSERT INTO sensor_data
 VALUES (1, 120, 510);
