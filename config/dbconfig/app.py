@@ -11,3 +11,11 @@ db = pymysql.connections.Connection(
     password=password,
     db=database,
 )
+
+def get_db_connection():
+    return pymysql.connect(
+        host=hostname,
+        user=user,
+        password=password,
+        db=database,
+    )
