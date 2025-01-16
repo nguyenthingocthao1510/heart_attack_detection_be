@@ -321,7 +321,7 @@ def update(id):
 
 ## PATIENT
 # GET LATEST RECORD - PATIENT
-def get_latest_record(account_id):
+def get_latest_record(account_id, table):
     cursor = db.cursor(DictCursor)
     
     try:
@@ -348,8 +348,8 @@ def get_latest_record(account_id):
 
         if role == 'patient':
             cursor.execute(
-                '''
-                SELECT d.*
+                f'''
+                SELECT {table}.*
                 FROM patient_record pr JOIN doctor d ON d.id = pr.doctor_id
                 WHERE patient_id = %s
                 ORDER BY id DESC
@@ -369,9 +369,6 @@ def get_latest_record(account_id):
 
     finally:
         cursor.close()
-
-
-
 
 #GET ALL PATIENT RECORD HISTORY - PATIENT
 def get_records_history(account_id):
@@ -459,3 +456,52 @@ def get_record_by_patient_id():
         return {"error": str(e)}, 500
     finally:
         cur.close()
+
+
+def get_latest_patient_record(account_id):
+    cursor = db.cursor(DictCursor)
+    try:
+        cursor.execute(
+            '''
+            SELECT 
+                COALESCE(d.id, p.id) AS user_id,
+                CASE
+                    WHEN d.id IS NOT NULL THEN 'doctor'
+                    WHEN p.id IS NOT NULL THEN 'patient'
+                END AS role
+            FROM account a
+            LEFT JOIN doctor d ON d.account_id = a.id
+            LEFT JOIN patient p ON p.account_id = a.id
+            WHERE a.id = %s
+            ''', (account_id)
+        )
+        result = cursor.fetchone()
+
+        if not result:
+            return jsonify({'error': 'Account not found'}), 404
+
+        user_id, role = result['user_id'], result['role']
+
+        if role == 'patient':
+            cursor.execute(
+                '''
+                SELECT pr.*
+                FROM patient_record pr JOIN doctor d ON d.id = pr.doctor_id
+                WHERE patient_id = %s
+                ORDER BY id DESC
+                LIMIT 1
+                ''',
+                (user_id)
+            )
+            latest_record = cursor.fetchone()
+
+        else:
+            return jsonify({'error': 'Invalid role'}), 400
+
+        return jsonify({latest_record}), 200
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+    finally:
+        cursor.close()
