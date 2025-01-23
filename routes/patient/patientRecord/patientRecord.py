@@ -31,7 +31,11 @@ def update_patient_record(id):
 # PATIENT
 @patient_record_route.route('/latest-patient-record/accountId=<int:account_id>', methods=['GET'])
 def get_latest_patient_record(account_id):
-    return get_latest_record(account_id)
+    return get_latest_record(account_id, 'd')
+
+@patient_record_route.route('/latest-patient-record2/accountId=<int:account_id>', methods=['GET'])
+def get_latest_patient_record2(account_id):
+    return get_latest_record(account_id, 'pr')
 
 @patient_record_route.route('/records/accountId=<int:account_id>', methods=['GET'])
 def get_all_patient_record_history(account_id):
