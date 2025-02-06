@@ -54,3 +54,7 @@ def add_diagnosis_history():
 @diagnosis_route.route('/patient/get-history/patient_id=<int:patient_id>', methods=['GET'])
 def get_history(patient_id):
     return dh_repo.get_history(patient_id)
+
+# @diagnosis_route.route("/patient/get-id", methods=["POST"])
+# def get_id():
+#     return manual.get_patient_id()
